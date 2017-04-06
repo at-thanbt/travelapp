@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_default"
+    android:gravity="center"
+    android:paddingBottom="@dimen/ll_footer_padding_bottom"
+    android:paddingTop="@dimen/ll_footer_padding_top">
+
+    <TextView
+        android:id="@+id/tvNameApp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textview.text.username.login"
+        android:layout_marginLeft="@dimen/textview.username.login.margin.left"
+        android:text="Travel Application"
+        android:textColor="@color/textview.text.title.register"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/textview_user_contact_margin_top"
+
+        />
+
+</RelativeLayout>
