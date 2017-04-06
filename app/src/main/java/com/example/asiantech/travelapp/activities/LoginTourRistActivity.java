@@ -9,10 +9,10 @@ import com.example.asiantech.travelapp.R;
 /**
  * Created by asiantech on 11/03/2017.
  */
-public class TourRistActivity extends AppCompatActivity {
+public class LoginTourRistActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tourrist);
+        setContentView(R.layout.activity_login_tourrist);
     }
 }

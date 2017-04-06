@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/ll_register_margin">
+    <RelativeLayout
+        android:id="@+id/rlMenuItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgIcon"
+            android:layout_width="@dimen/img_icon_menu_size"
+            android:layout_height="@dimen/img_icon_menu_size"
+            android:layout_marginLeft="@dimen/img_icon_menu_margin_left"
+            android:layout_centerVertical="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_home" />
+
+        <TextView
+            android:id="@+id/tvMenuItemName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/img_back_size"
+            android:layout_toRightOf="@+id/imgIcon"
+            android:background="@android:color/transparent"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/img_icon_menu_margin_left"
+            android:textColor="@color/textview.text.title.register"
+            android:textSize="@dimen/textview_title_footer" />
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_height"
+        android:background="@color/view_background_separate"
+        android:layout_below="@+id/rlMenuItem"
+        />
+
+
+
+</RelativeLayout>
