@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -100,12 +101,12 @@ public class ListTouristAdapter extends RecyclerView.Adapter<ListTouristAdapter.
     class MyVietHolder extends RecyclerView.ViewHolder {
 
         private TextView mTvTourist;
-        private RelativeLayout mRelativeLayout;
+        private LinearLayout mRelativeLayout;
 
         public MyVietHolder(View itemView) {
             super(itemView);
             mTvTourist = (TextView) itemView.findViewById(R.id.tvTourist);
-            mRelativeLayout = (RelativeLayout) itemView.findViewById(R.id.rlTouristItem);
+            mRelativeLayout = (LinearLayout) itemView.findViewById(R.id.llItemChat);
         }
     }
 
