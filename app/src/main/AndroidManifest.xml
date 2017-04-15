@@ -19,6 +19,7 @@
         <activity android:name=".activities.LoginTourRistActivity"/>
         <activity android:name=".activities.LoginTourGuideActivity"/>
         <activity android:name=".activities.RuleActivity"/>
+        <activity android:name=".activities.AddTourristActivity"/>
     </application>
 
 </manifest>

@@ -11,17 +11,23 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.asiantech.travelapp.R;
 import com.example.asiantech.travelapp.activities.adapters.SettingMenuAdapter;
-import com.example.asiantech.travelapp.activities.fragments.MainFragment;
+import com.example.asiantech.travelapp.activities.fragments.AlertFragment;
+import com.example.asiantech.travelapp.activities.fragments.ChatFragment;
+import com.example.asiantech.travelapp.activities.fragments.HomeFragment;
+import com.example.asiantech.travelapp.activities.fragments.MapFragment;
+import com.example.asiantech.travelapp.activities.fragments.ScheduleFragment;
 import com.example.asiantech.travelapp.activities.objects.MenuItem;
 import com.example.asiantech.travelapp.activities.utils.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainTourGuideActivity extends AppCompatActivity {
+public class MainTourGuideActivity extends AppCompatActivity implements View.OnClickListener{
     public ActionBarDrawerToggle mDrawerToggle;
     protected View mRlContainer;
     protected RecyclerView mRecyclerViewMenu;
@@ -32,6 +38,12 @@ public class MainTourGuideActivity extends AppCompatActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private float mLastTranslate = 0.0f;
+    private Button mBtnHome;
+    private Button mBtnSchedule;
+    private Button mBtnAlert;
+    private Button mBtnMap;
+    private Button mBtnChat;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +63,19 @@ public class MainTourGuideActivity extends AppCompatActivity {
     }
 
     private void initMain() {
-        getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new MainFragment()).commit();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new HomeFragment()).commit();
+        mBtnHome = (Button) findViewById(R.id.btnHome);
+        mBtnSchedule = (Button) findViewById(R.id.btnSchedule);
+        mBtnAlert = (Button) findViewById(R.id.btnAlert);
+        mBtnMap = (Button) findViewById(R.id.btnMap);
+        mBtnChat = (Button) findViewById(R.id.btnChat);
+
+        mBtnHome.setOnClickListener(this);
+        mBtnSchedule.setOnClickListener(this);
+        mBtnAlert.setOnClickListener(this);
+        mBtnMap.setOnClickListener(this);
+        mBtnChat.setOnClickListener(this);
 
     }
 
@@ -61,7 +85,8 @@ public class MainTourGuideActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Da Nang");
+        TextView mTvTitle = (TextView) mToolbar.findViewById(R.id.titleToolbar);
+        mTvTitle.setText("Da Nang");
 
 
     }
@@ -133,5 +158,30 @@ public class MainTourGuideActivity extends AppCompatActivity {
         mItems.add(new Integer(1));
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.btnHome:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new HomeFragment()).commit();
+                break;
+            case R.id.btnSchedule:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new ScheduleFragment()).commit();
+
+                break;
+            case R.id.btnAlert:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new AlertFragment()).commit();
+
+                break;
+            case R.id.btnMap:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new MapFragment()).commit();
+
+                break;
+            case R.id.btnChat:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new ChatFragment()).commit();
+
+                break;
+
+        }
+    }
 }
 
