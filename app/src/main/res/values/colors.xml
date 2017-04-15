@@ -30,4 +30,6 @@
     <color name="ll_item_separator">#85caea</color>
     <color name="textview_Register_in_Login">#303F9F</color>
     <color name="view_background_separate">#DEDEDE</color>
+
+    <color name="hyper_link">#1A83EB</color>
 </resources>

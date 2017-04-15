@@ -2,17 +2,18 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="40dp">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="40dp">
 
         <TextView
-            android:id="@android:id/title"
+            android:id="@+id/titleToolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
+            android:text="Title"
             android:textColor="#0599d9"
             android:textSize="25sp"/>
     <ProgressBar

@@ -10,14 +10,12 @@ import android.view.ViewGroup;
 import com.example.asiantech.travelapp.R;
 
 /**
- * Created by phuong on 19/03/2017.
+ * Created by phuong on 08/04/2017.
  */
 
-public class MainFragment extends Fragment {
-    @Nullable
-    @Override
+public class MapFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_main_fragment,null);
+        View view = inflater.inflate(R.layout.activity_map_fragment, container,false);
         return view;
     }
 }

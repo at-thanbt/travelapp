@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="30dp"
+            android:background="@android:color/darker_gray" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpagerHome"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_below="@+id/view"></android.support.v4.view.ViewPager>
+
+        <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/viewpagerHome"
+            android:layout_centerHorizontal="true"
+            android:padding="5dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/indicator"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="From : "
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/tvDateFrom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tvNameTourGuide"
+                android:layout_toRightOf="@+id/tvFrom"
+                android:text="1/1/2017"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/tvTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvFrom"
+                android:layout_marginTop="10dp"
+                android:text="To : "
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/tvDateTo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/tvNameTourGuide"
+                android:layout_below="@+id/tvDateFrom"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/tvFrom"
+                android:text="3/1/2017"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/tvTourGuide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvTo"
+                android:layout_marginTop="10dp"
+                android:text="TourGuide : "
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/tvNameTourGuide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvDateTo"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/tvTourGuide"
+                android:text="Bui Thi Than"
+                android:textSize="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvNameTourGuide"
+                android:layout_marginTop="10dp"
+                android:text="List Tourrist"
+                android:id="@+id/tvListTourist"
+                android:textSize="25dp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
