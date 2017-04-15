@@ -20,6 +20,7 @@
         <activity android:name=".activities.LoginTourGuideActivity"/>
         <activity android:name=".activities.RuleActivity"/>
         <activity android:name=".activities.AddTourristActivity"/>
+        <activity android:name=".activities.ChatActivity"/>
     </application>
 
 </manifest>

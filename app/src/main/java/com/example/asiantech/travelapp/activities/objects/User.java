@@ -5,6 +5,7 @@ package com.example.asiantech.travelapp.activities.objects;
  */
 
 public class User {
+    private String chatWith;
     private String id;
     private String name;
     private String pass;
@@ -64,5 +65,21 @@ public class User {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public User(String chatWith, String id, String name, String pass, String phoneNumber) {
+        this.chatWith = chatWith;
+        this.id = id;
+        this.name = name;
+        this.pass = pass;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getChatWith() {
+        return chatWith;
+    }
+
+    public void setChatWith(String chatWith) {
+        this.chatWith = chatWith;
     }
 }
