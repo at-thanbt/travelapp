@@ -2,4 +2,14 @@
     <string name="app_name">TravelApp</string>
     <string name="openDrawer">Open</string>
     <string name="closeDrawer">Close</string>
+    <string name="google_api_key">AIzaSyBWoSCXiTwr8ygoGLlHSLIJ3S7WRIiFCEA</string>
+    <string name="title_GPS_Not_Enabled">GPS Not Enabled</string>
+    <string name="message_Do_you_wants_to_turn_On_GPS">Do you wants to turn On GPS</string>
+    <string name="message_Yes">Yes</string>
+    <string name="message_No">No</string>
+    <string name="message_no_service_provider_available">No Service Provider Available</string>
+    <string name="message_you_are_here">you are here</string>
+    <string name="message_turn_on_network">Please turn on network</string>
+    <string name="message_not_found_address">Not Found Address</string>
+
 </resources>

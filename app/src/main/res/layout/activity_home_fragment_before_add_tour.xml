@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgBag"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:src="@drawable/bag"
+        />
+    <Button
+        android:id="@+id/btnAddTour"
+        android:layout_below="@+id/imgBag"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="ADD A TOUR"
+        android:background="@color/colorPrimaryDark"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/bg_default"/>
+    <View
+        android:layout_below="@+id/btnAddTour"
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/darker_gray" />
+</RelativeLayout>
