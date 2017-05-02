@@ -18,6 +18,7 @@ import com.example.asiantech.travelapp.R;
 import com.example.asiantech.travelapp.activities.adapters.SettingMenuAdapter;
 import com.example.asiantech.travelapp.activities.fragments.AlertFragment;
 import com.example.asiantech.travelapp.activities.fragments.ChatFragment;
+import com.example.asiantech.travelapp.activities.fragments.HomeBlank;
 import com.example.asiantech.travelapp.activities.fragments.HomeFragment;
 import com.example.asiantech.travelapp.activities.fragments.MapFragment;
 import com.example.asiantech.travelapp.activities.fragments.ScheduleFragment;
@@ -162,7 +163,7 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btnHome:
-                getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new HomeFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new HomeBlank()).commit();
                 break;
             case R.id.btnSchedule:
                 getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new ScheduleFragment()).commit();
