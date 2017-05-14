@@ -65,7 +65,7 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
 
     private void initMain() {
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new HomeBlank()).commit();
         mBtnHome = (Button) findViewById(R.id.btnHome);
         mBtnSchedule = (Button) findViewById(R.id.btnSchedule);
         mBtnAlert = (Button) findViewById(R.id.btnAlert);

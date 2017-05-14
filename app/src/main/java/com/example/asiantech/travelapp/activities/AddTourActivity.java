@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.example.asiantech.travelapp.R;
+import com.example.asiantech.travelapp.activities.fragments.HomeBlank;
 import com.example.asiantech.travelapp.activities.fragments.HomeFragment;
 import com.firebase.client.Firebase;
 
@@ -18,27 +19,17 @@ public class AddTourActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tour);
-        initData();
+        mToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        inits();
     }
 
     void inits() {
         initActionbar();
-        initMain();
     }
-
     private void initActionbar() {
         setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_menu);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        TextView mTvTitle = (TextView) mToolbar.findViewById(R.id.titleToolbar);
-        mTvTitle.setText("ADD A TOUR");
-    }
 
-    private void initMain() {
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new HomeFragment()).commit();
 
     }
+
 }
