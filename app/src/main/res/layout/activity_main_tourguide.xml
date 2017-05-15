@@ -23,73 +23,143 @@
                 android:layout_height="match_parent"
                 android:layout_below="@+id/toolBar"
                 android:orientation="vertical"
-                android:weightSum="10">
+                android:weightSum="16">
 
                 <FrameLayout
                     android:id="@+id/frMainContainer"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="9" />
+                    android:layout_weight="14" />
 
                 <RelativeLayout
                     android:id="@+id/rlActionBar"
                     android:layout_width="wrap_content"
-                    android:layout_height="100dp"
+                    android:layout_height="0dp"
                     android:layout_alignParentBottom="true"
-                    android:layout_weight="1">
-
-                    <View
-                        android:id="@+id/viewBottom"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginTop="30dp"
-                        android:background="@android:color/black" />
+                    android:layout_weight="2">
 
                     <LinearLayout
                         android:id="@+id/llActionBar"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_below="@+id/viewBottom"
+                        android:background="@android:color/white"
                         android:orientation="horizontal"
                         android:weightSum="5">
-                        <Button
+
+                        <LinearLayout
                             android:id="@+id/btnHome"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_below="@+id/view"
                             android:layout_weight="1"
-                            android:text="Home" />
-                        <Button
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="4dp"
+                                android:layout_marginTop="4dp"
+                                android:src="@drawable/home_menu" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Trang chủ"
+                                android:textColor="#0983C5"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:id="@+id/btnSchedule"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_below="@+id/view"
                             android:layout_weight="1"
-                            android:text="Schedule" />
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                        <Button
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="4dp"
+                                android:layout_marginTop="4dp"
+                                android:src="@drawable/ic_schedule" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Kế hoạch"
+                                android:textColor="#0983C5"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:id="@+id/btnAlert"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_below="@+id/view"
                             android:layout_weight="1"
-                            android:text="Alert" />
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                        <Button
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="4dp"
+                                android:layout_marginTop="4dp"
+                                android:src="@drawable/notify_menu" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Thông báo"
+                                android:textColor="#0983C5"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:id="@+id/btnMap"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_below="@+id/view"
                             android:layout_weight="1"
-                            android:text="Map" />
+                            android:gravity="center"
+                            android:orientation="vertical">
 
-                        <Button
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="4dp"
+                                android:layout_marginTop="4dp"
+                                android:src="@drawable/location_menu" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Bản đồ"
+                                android:textColor="#0983C5"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:id="@+id/btnChat"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_below="@+id/view"
                             android:layout_weight="1"
-                            android:text="Chat" />
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginBottom="4dp"
+                                android:layout_marginTop="4dp"
+                                android:src="@drawable/chat_menu" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Tin nhắn"
+                                android:textColor="#0983C5"
+                                android:textSize="14sp" />
+                        </LinearLayout>
                     </LinearLayout>
 
                 </RelativeLayout>
