@@ -10,19 +10,26 @@ public class Tour {
     private String tourName;
     private String destination;
     private String descriptionn;
-    private Date startDate ;
-    private Date endDate ;
-    private String idTourGide;
-    private String idPiture;
+    private String startDate ;
+    private String endDate ;
+    private String usernameTourGuide;
+    private int maximumPerson;
 
-    public Tour(String idTour, String tourName, String destination, String descriptionn, Date startDate, String idTourGide, String idPiture, Date endDate) {
+    public int getMaximumPerson() {
+        return maximumPerson;
+    }
+
+    public void setMaximumPerson(int maximumPerson) {
+        this.maximumPerson = maximumPerson;
+    }
+
+    public Tour(String idTour, String tourName, String destination, String descriptionn, String startDate, String usernameTourGuide, String endDate) {
         this.idTour = idTour;
         this.tourName = tourName;
         this.destination = destination;
         this.descriptionn = descriptionn;
         this.startDate = startDate;
-        this.idTourGide = idTourGide;
-        this.idPiture = idPiture;
+        this.usernameTourGuide = usernameTourGuide;
         this.endDate = endDate;
     }
 
@@ -61,35 +68,27 @@ public class Tour {
         this.descriptionn = descriptionn;
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
 
-    public String getIdTourGide() {
-        return idTourGide;
+    public String getUsernameTourGuide() {
+        return usernameTourGuide;
     }
 
-    public void setIdTourGide(String idTourGide) {
-        this.idTourGide = idTourGide;
-    }
-
-    public String getIdPiture() {
-        return idPiture;
-    }
-
-    public void setIdPiture(String idPiture) {
-        this.idPiture = idPiture;
+    public void setUsernameTourGuide(String idTourGide) {
+        this.usernameTourGuide = idTourGide;
     }
 }

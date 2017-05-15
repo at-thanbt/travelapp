@@ -1,6 +1,5 @@
 package com.example.asiantech.travelapp.activities;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -10,8 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.animation.TranslateAnimation;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.asiantech.travelapp.R;
@@ -19,7 +17,6 @@ import com.example.asiantech.travelapp.activities.adapters.SettingMenuAdapter;
 import com.example.asiantech.travelapp.activities.fragments.AlertFragment;
 import com.example.asiantech.travelapp.activities.fragments.ChatFragment;
 import com.example.asiantech.travelapp.activities.fragments.HomeBlank;
-import com.example.asiantech.travelapp.activities.fragments.HomeFragment;
 import com.example.asiantech.travelapp.activities.fragments.MapFragment;
 import com.example.asiantech.travelapp.activities.fragments.ScheduleFragment;
 import com.example.asiantech.travelapp.activities.objects.MenuItem;
@@ -28,7 +25,7 @@ import com.example.asiantech.travelapp.activities.utils.ScreenUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainTourGuideActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainTourGuideActivity extends AppCompatActivity implements View.OnClickListener {
     public ActionBarDrawerToggle mDrawerToggle;
     protected View mRlContainer;
     protected RecyclerView mRecyclerViewMenu;
@@ -36,14 +33,12 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
     private Toolbar mToolbar;
     private List<Object> mItems;
     private SettingMenuAdapter mAdapter;
-    private CharSequence mDrawerTitle;
-    private CharSequence mTitle;
-    private float mLastTranslate = 0.0f;
-    private Button mBtnHome;
-    private Button mBtnSchedule;
-    private Button mBtnAlert;
-    private Button mBtnMap;
-    private Button mBtnChat;
+    private LinearLayout mBtnHome;
+    private LinearLayout mBtnSchedule;
+    private LinearLayout mBtnAlert;
+    private LinearLayout mBtnMap;
+    private LinearLayout mBtnChat;
+    private TextView mTvTitle;
 
 
     @Override
@@ -64,13 +59,14 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
     }
 
     private void initMain() {
+        setTitleMenu("Trang chủ");
 
         getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new HomeBlank()).commit();
-        mBtnHome = (Button) findViewById(R.id.btnHome);
-        mBtnSchedule = (Button) findViewById(R.id.btnSchedule);
-        mBtnAlert = (Button) findViewById(R.id.btnAlert);
-        mBtnMap = (Button) findViewById(R.id.btnMap);
-        mBtnChat = (Button) findViewById(R.id.btnChat);
+        mBtnHome = (LinearLayout) findViewById(R.id.btnHome);
+        mBtnSchedule = (LinearLayout) findViewById(R.id.btnSchedule);
+        mBtnAlert = (LinearLayout) findViewById(R.id.btnAlert);
+        mBtnMap = (LinearLayout) findViewById(R.id.btnMap);
+        mBtnChat = (LinearLayout) findViewById(R.id.btnChat);
 
         mBtnHome.setOnClickListener(this);
         mBtnSchedule.setOnClickListener(this);
@@ -82,14 +78,11 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
 
     private void initActionbar() {
         setSupportActionBar(mToolbar);
-        mToolbar.setNavigationIcon(R.drawable.ic_menu);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+        mToolbar.setNavigationIcon(R.drawable.menu);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.menu);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        TextView mTvTitle = (TextView) mToolbar.findViewById(R.id.titleToolbar);
-        mTvTitle.setText("Da Nang");
-
-
+        mTvTitle = (TextView) mToolbar.findViewById(R.id.titleToolbar);
     }
 
     public void initMenu() {
@@ -99,7 +92,6 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
         mAdapter = new SettingMenuAdapter(mItems, this);
         mRecyclerViewMenu.setAdapter(mAdapter);
 
-        mTitle = mDrawerTitle = "Home";
         mDrawerLayout.setScrimColor(getResources().getColor(R.color.drawerlayout_scrim));
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.openDrawer, R.string.closeDrawer) {
             @Override
@@ -114,27 +106,11 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
                 mDrawerLayout.closeDrawer(GravityCompat.START);
                 super.onDrawerClosed(drawerView);
             }
-
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                super.onDrawerSlide(drawerView, slideOffset);
-                float moveFactor = (mRecyclerViewMenu.getWidth() * slideOffset);
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    mRlContainer.setTranslationX(moveFactor);
-                } else {
-                    TranslateAnimation anim = new TranslateAnimation(mLastTranslate, moveFactor, 0.0f, 0.0f);
-                    anim.setDuration(0);
-                    anim.setFillAfter(true);
-                    mRlContainer.startAnimation(anim);
-                    mLastTranslate = moveFactor;
-                }
-            }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
         mDrawerToggle.setDrawerIndicatorEnabled(false);
-        mDrawerToggle.setHomeAsUpIndicator(R.drawable.ic_menu);
+        mDrawerToggle.setHomeAsUpIndicator(R.drawable.menu);
         mDrawerToggle.setToolbarNavigationClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,7 +121,10 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
         DrawerLayout.LayoutParams params = (DrawerLayout.LayoutParams) mRecyclerViewMenu.getLayoutParams();
         params.width = ScreenUtil.getWidthScreen(this) - ScreenUtil.convertDPToPixels(this, 76);
 
+    }
 
+    public void setTitleMenu(String title) {
+        mTvTitle.setText(title);
     }
 
     public void initsData() {
@@ -161,25 +140,27 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btnHome:
+                setTitleMenu("Trang chủ");
                 getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new HomeBlank()).commit();
                 break;
             case R.id.btnSchedule:
+                setTitleMenu("Kế hoạch");
                 getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new ScheduleFragment()).commit();
-
                 break;
             case R.id.btnAlert:
+                setTitleMenu("Thông báo");
                 getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new AlertFragment()).commit();
-
                 break;
             case R.id.btnMap:
+                setTitleMenu("Bản đồ");
                 getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new MapFragment()).commit();
 
                 break;
             case R.id.btnChat:
+                setTitleMenu("Nhắn tin");
                 getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new ChatFragment()).commit();
-
                 break;
 
         }
