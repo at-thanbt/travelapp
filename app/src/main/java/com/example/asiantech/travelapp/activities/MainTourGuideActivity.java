@@ -16,7 +16,7 @@ import com.example.asiantech.travelapp.R;
 import com.example.asiantech.travelapp.activities.adapters.SettingMenuAdapter;
 import com.example.asiantech.travelapp.activities.fragments.AlertFragment;
 import com.example.asiantech.travelapp.activities.fragments.ChatFragment;
-import com.example.asiantech.travelapp.activities.fragments.HomeBlank;
+import com.example.asiantech.travelapp.activities.fragments.HomeBlankFragment;
 import com.example.asiantech.travelapp.activities.fragments.MapFragment;
 import com.example.asiantech.travelapp.activities.fragments.ScheduleFragment;
 import com.example.asiantech.travelapp.activities.objects.MenuItem;
@@ -61,7 +61,7 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
     private void initMain() {
         setTitleMenu("Trang chủ");
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new HomeBlank()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new HomeBlankFragment()).commit();
         mBtnHome = (LinearLayout) findViewById(R.id.btnHome);
         mBtnSchedule = (LinearLayout) findViewById(R.id.btnSchedule);
         mBtnAlert = (LinearLayout) findViewById(R.id.btnAlert);
@@ -143,7 +143,7 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
         switch (view.getId()) {
             case R.id.btnHome:
                 setTitleMenu("Trang chủ");
-                getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new HomeBlank()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new HomeBlankFragment()).commit();
                 break;
             case R.id.btnSchedule:
                 setTitleMenu("Kế hoạch");
