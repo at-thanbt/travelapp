@@ -91,4 +91,18 @@ public class Tour {
     public void setUsernameTourGuide(String idTourGide) {
         this.usernameTourGuide = idTourGide;
     }
+
+    @Override
+    public String toString() {
+        return "Tour{" +
+                "idTour='" + idTour + '\'' +
+                ", tourName='" + tourName + '\'' +
+                ", destination='" + destination + '\'' +
+                ", descriptionn='" + descriptionn + '\'' +
+                ", startDate='" + startDate + '\'' +
+                ", endDate='" + endDate + '\'' +
+                ", usernameTourGuide='" + usernameTourGuide + '\'' +
+                ", maximumPerson=" + maximumPerson +
+                '}';
+    }
 }

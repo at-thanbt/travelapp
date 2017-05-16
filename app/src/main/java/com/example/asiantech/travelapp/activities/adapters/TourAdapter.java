@@ -25,10 +25,13 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.MyVietHolder> 
     private List<Tour> mTours;
     private Context mContext;
     private SimpleDateFormat myFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private onItemClick mListener;
 
-    public TourAdapter(Context mContext, List<Tour> tours) {
+
+    public TourAdapter(Context mContext, List<Tour> tours, onItemClick listener) {
         this.mContext = mContext;
         this.mTours = tours;
+        mListener = listener;
     }
 
     @Override
@@ -39,7 +42,7 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.MyVietHolder> 
 
     @Override
     public void onBindViewHolder(MyVietHolder holder, int position) {
-        Tour tour = mTours.get(position);
+        final Tour tour = mTours.get(position);
         holder.mTvNameTour.setText(tour.getTourName());
         holder.mTvTime.setText(tour.getStartDate() + " - " + tour.getEndDate());
 
@@ -52,11 +55,25 @@ public class TourAdapter extends RecyclerView.Adapter<TourAdapter.MyVietHolder> 
             e.printStackTrace();
             holder.mTvDuration.setText("Đang cập nhật");
         }
+
+        holder.mRlItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.itemClick(tour.getIdTour());
+            }
+        });
     }
+
+
 
     @Override
     public int getItemCount() {
         return (mTours == null) ? 0 : mTours.size();
+    }
+
+    public interface onItemClick
+    {
+        void itemClick (String idTour);
     }
 
     class MyVietHolder extends RecyclerView.ViewHolder {

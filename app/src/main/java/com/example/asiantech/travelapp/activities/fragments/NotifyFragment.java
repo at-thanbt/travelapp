@@ -13,7 +13,7 @@ import com.example.asiantech.travelapp.R;
  * Created by phuong on 08/04/2017.
  */
 
-public class AlertFragment extends Fragment {
+public class NotifyFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

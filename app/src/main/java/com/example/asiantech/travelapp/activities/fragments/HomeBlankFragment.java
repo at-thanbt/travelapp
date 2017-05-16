@@ -1,9 +1,7 @@
 package com.example.asiantech.travelapp.activities.fragments;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -21,6 +19,7 @@ import android.widget.RelativeLayout;
 
 import com.example.asiantech.travelapp.R;
 import com.example.asiantech.travelapp.activities.AddTourActivity;
+import com.example.asiantech.travelapp.activities.DetailTourActivity;
 import com.example.asiantech.travelapp.activities.adapters.TourAdapter;
 import com.example.asiantech.travelapp.activities.objects.Tour;
 import com.example.asiantech.travelapp.activities.utils.Constant;
@@ -36,14 +35,12 @@ import java.util.List;
 /**
  * Created by asiantech on 30/04/2017.
  */
-@TargetApi(Build.VERSION_CODES.M)
-public class HomeBlankFragment extends Fragment {
+public class HomeBlankFragment extends Fragment implements TourAdapter.onItemClick {
+    public static String ID_TOUR = "idTour";
     Button mBtnAddTour;
     private List<Tour> mTours;
-
     private SharedPreferences mSharedPreferencesUserLogin;
     private String idUserLogin;
-
     private RelativeLayout mRlIntro;
     private RecyclerView mRecyclerViewTour;
     private TourAdapter mTourAdapter;
@@ -82,31 +79,22 @@ public class HomeBlankFragment extends Fragment {
 
     public void accessView() {
         getData();
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mTourAdapter = new TourAdapter(getContext(), mTours, this);
+        mRecyclerViewTour.setLayoutManager(layoutManager);
+        mRecyclerViewTour.setAdapter(mTourAdapter);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (mTours.size() == 0) {
-                    mRlIntro.setVisibility(View.VISIBLE);
-                    mRecyclerViewTour.setVisibility(View.GONE);
-                } else {
-                    mRlIntro.setVisibility(View.GONE);
-                    mRecyclerViewTour.setVisibility(View.VISIBLE);
-
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-                    mTourAdapter = new TourAdapter(getContext(), mTours);
-                    mRecyclerViewTour.setLayoutManager(layoutManager);
-                    mRecyclerViewTour.setAdapter(mTourAdapter);
-                    mProgressBarLoading.setVisibility(View.GONE);
-                }
+                mTourAdapter.notifyDataSetChanged();
             }
-        }, 8000);
+        },10000);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d("tag1233", "123");
         accessView();
     }
 
@@ -130,6 +118,15 @@ public class HomeBlankFragment extends Fragment {
                         mTours.add(tour);
                     }
                 }
+                if (mTours.size() == 0) {
+                    mRlIntro.setVisibility(View.VISIBLE);
+                    mRecyclerViewTour.setVisibility(View.GONE);
+                } else {
+                    mRlIntro.setVisibility(View.GONE);
+                    mRecyclerViewTour.setVisibility(View.VISIBLE);
+                    mTourAdapter.notifyDataSetChanged();
+                    mProgressBarLoading.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -137,5 +134,12 @@ public class HomeBlankFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void itemClick(String idTour) {
+        Intent intent = new Intent(getActivity(), DetailTourActivity.class);
+        intent.putExtra(ID_TOUR, idTour);
+        startActivity(intent);
     }
 }
