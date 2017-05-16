@@ -87,9 +87,9 @@ public class HomeBlankFragment extends Fragment implements TourAdapter.onItemCli
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Log.d("tag", "run: "+mTours.toString());
+                mTourAdapter.notifyDataSetChanged();
             }
-        }, 10000);
+        },10000);
     }
 
     @Override
@@ -127,7 +127,6 @@ public class HomeBlankFragment extends Fragment implements TourAdapter.onItemCli
                     mTourAdapter.notifyDataSetChanged();
                     mProgressBarLoading.setVisibility(View.GONE);
                 }
-                Log.d("tag", "onDataChange: "+mTours.toString());
             }
 
             @Override
