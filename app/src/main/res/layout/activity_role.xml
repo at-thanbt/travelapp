@@ -3,7 +3,8 @@
     android:orientation="vertical"
     android:weightSum="2"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_default">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -11,8 +12,8 @@
         <ImageView
             android:id="@+id/image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
+            android:layout_height="match_parent"
+            android:src="@drawable/role"
             android:layout_gravity="center"
             />
 
@@ -21,12 +22,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@color/bg_default">
         <TextView
             android:id="@+id/tvname"
+            android:textSize="20dp"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="YOU ARE..."
+            android:text="Bạn là ..."
             android:layout_gravity="center_horizontal"
             />
         <RadioGroup
@@ -41,26 +45,34 @@
             android:layout_gravity="center">
 
             <RadioButton
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tourgide"
+                android:text="Hướng dẫn viên"
                 android:id="@+id/radioButton_tourgide"
                 android:checked="false" />
 
             <RadioButton
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tourist"
+                android:text="Khách du lịch"
                 android:id="@+id/radioButton_tourist"
                 android:checked="true"
                 android:layout_marginLeft="40dp"/>
         </RadioGroup>
         <Button
+            android:layout_marginTop="40dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@drawable/custom_button"
             android:id="@+id/btnchoose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Choose"
+            android:text="Chọn"
             android:layout_gravity="center"
+            style="?android:attr/borderlessButtonStyle"
             />
     </LinearLayout>
 
