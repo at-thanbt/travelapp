@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.example.asiantech.travelapp.R;
 import com.example.asiantech.travelapp.activities.adapters.SettingMenuAdapter;
-import com.example.asiantech.travelapp.activities.fragments.AlertFragment;
+import com.example.asiantech.travelapp.activities.fragments.NotifyFragment;
 import com.example.asiantech.travelapp.activities.fragments.ChatFragment;
 import com.example.asiantech.travelapp.activities.fragments.HomeBlankFragment;
 import com.example.asiantech.travelapp.activities.fragments.MapFragment;
@@ -151,7 +151,7 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
                 break;
             case R.id.btnAlert:
                 setTitleMenu("Thông báo");
-                getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new AlertFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new NotifyFragment()).commit();
                 break;
             case R.id.btnMap:
                 setTitleMenu("Bản đồ");
