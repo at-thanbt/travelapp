@@ -36,17 +36,24 @@ public class RuleActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent;
+                int role = 0;
                 if (mRdbTourGuide.isChecked()) {
                     String isLogin = mSharedPreferencesLogin.getString(Constant.IS_USER_LOGIN, "false");
                     if ("true".equals(isLogin)) {
                         intent = new Intent(RuleActivity.this, MainTourGuideActivity.class);
                     } else {
+
                         intent = new Intent(RuleActivity.this, LoginTourGuideActivity.class);
+                        intent.putExtra("role", role);
                     }
                 } else {
+                    role = 1;
                     intent = new Intent(RuleActivity.this, LoginTourRistActivity.class);
+                    intent.putExtra("role", role);
                 }
+
                 startActivity(intent);
+
             }
         });
     }
