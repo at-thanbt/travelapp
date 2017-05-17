@@ -72,7 +72,7 @@ public class LoginTourGuideActivity extends BaseActivity {
                                 intent = new Intent(LoginTourGuideActivity.this, MainTourGuideActivity.class);
                                 startActivity(intent);
                             } else {
-g                                showMessageDialog(getString(R.string.username_or_password_invalid));
+                                showMessageDialog(getString(R.string.username_or_password_invalid));
                             }
                         }
 

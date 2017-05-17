@@ -16,4 +16,9 @@
     <string name="URL_BASE">https://travelapp-4961a.firebaseio.com/</string>
     <string name="button_close_text">Đóng</string>
     <string name="username_or_password_invalid">Sai tên đăng nhập hoặc mật khẩu</string>
+    <string name="item_detail_tour_menu_edit">Sửa</string>
+    <string name="item_detail_tour_menu_add_plan">Thêm kế hoạch</string>
+    <string name="item_detail_tour_menu_people">Người tham gia</string>
+    <string name="item_detail_tour_menu_delete_trip">Xóa chuyến đi</string>
+    <string name="item_detail_tour_menu_merge_trip">Gộp chuyến đi</string>
 </resources>

@@ -9,7 +9,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.example.asiantech.travelapp.R;
 import com.example.asiantech.travelapp.activities.fragments.HomeBlankFragment;
@@ -46,7 +47,35 @@ public class DetailTourActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    public String getIdTour(){
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detail_tour_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itemAddPlan:
+                // TODO: 17/05/2017 Handle click add plan
+                break;
+            case R.id.itemDeleteTrip:
+                // TODO: 17/05/2017 Handle click delete trip
+                break;
+            case R.id.itemEditTrip:
+                // TODO: 17/05/2017 Handle click edit trip
+                break;
+            case R.id.itemMergeTrip:
+                // TODO: 17/05/2017 Handle click merge trip
+                break;
+            case R.id.itemPeople:
+                // TODO: 17/05/2017 Handle click people
+                break;
+        }
+        return false;
+    }
+
+    public String getIdTour() {
         return mIdTour;
     }
 

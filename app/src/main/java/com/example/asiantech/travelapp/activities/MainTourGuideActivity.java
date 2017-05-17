@@ -48,7 +48,7 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
         mToolbar = (Toolbar) findViewById(R.id.toolBar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mRecyclerViewMenu = (RecyclerView) findViewById(R.id.frLeftMenuContainer);
-        mRlContainer = (View) findViewById(R.id.frMainContainer);
+        mRlContainer = findViewById(R.id.frMainContainer);
         inits();
     }
 
