@@ -28,11 +28,14 @@ import java.util.List;
  */
 
 public class DetailTourActivity extends AppCompatActivity {
+    public static final int ADD_PLAN_REQUEST_CODE = 123;
+
     private String mIdTour;
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private ScheduleFragment mScheduleFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,9 +69,12 @@ public class DetailTourActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.itemAddPlan:
-                // TODO: 17/05/2017 Handle click add plan
+                intent = new Intent(this, AddScheduleActivity.class);
+                intent.putExtra(HomeBlankFragment.ID_TOUR, mIdTour);
+                startActivityForResult(intent, ADD_PLAN_REQUEST_CODE);
                 break;
             case R.id.itemDeleteTrip:
                 // TODO: 17/05/2017 Handle click delete trip
@@ -80,7 +86,7 @@ public class DetailTourActivity extends AppCompatActivity {
                 // TODO: 17/05/2017 Handle click merge trip
                 break;
             case R.id.itemPeople:
-                Intent intent = new Intent(DetailTourActivity.this, AddTourristActivity.class);
+                intent = new Intent(DetailTourActivity.this, AddTourristActivity.class);
                 intent.putExtra(HomeBlankFragment.ID_TOUR, mIdTour);
                 startActivity(intent);
                 break;
@@ -88,11 +94,12 @@ public class DetailTourActivity extends AppCompatActivity {
         return false;
     }
 
+
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        ScheduleFragment scheduleFragment = new ScheduleFragment();
-        scheduleFragment.setIdTour(mIdTour);
-        adapter.addFragment(scheduleFragment, "Kế Hoạch");
+        mScheduleFragment = new ScheduleFragment();
+        mScheduleFragment.setIdTour(mIdTour);
+        adapter.addFragment(mScheduleFragment, "Kế Hoạch");
         adapter.addFragment(new NotifyFragment(), "Thông báo");
         viewPager.setAdapter(adapter);
     }
@@ -123,6 +130,15 @@ public class DetailTourActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == ADD_PLAN_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                mScheduleFragment.getDataSchedule();
+            }
         }
     }
 }

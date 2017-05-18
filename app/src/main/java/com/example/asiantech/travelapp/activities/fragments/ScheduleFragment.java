@@ -63,7 +63,7 @@ public class ScheduleFragment extends Fragment implements ScheduleAdapter.OnTour
                 if (getActivity() instanceof DetailTourActivity) {
                     intent.putExtra(HomeBlankFragment.ID_TOUR, mIdTour);
                 }
-                startActivity(intent);
+                getActivity().startActivityForResult(intent, DetailTourActivity.ADD_PLAN_REQUEST_CODE);
             }
         });
 
@@ -85,6 +85,7 @@ public class ScheduleFragment extends Fragment implements ScheduleAdapter.OnTour
                 mProgressBarLoading.setVisibility(View.GONE);
                 ScheduleResponse response = dataSnapshot.getValue(ScheduleResponse.class);
                 if (response != null) {
+                    mTourSchedules.clear();
                     mTourSchedules.addAll(response.getSchedules());
                     mTvTitle.setText(response.getTitle());
                     if (mTourSchedules.size() == 0) {
