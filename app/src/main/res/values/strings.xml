@@ -3,6 +3,7 @@
     <string name="openDrawer">Open</string>
     <string name="closeDrawer">Close</string>
     <string name="google_api_key">AIzaSyBWoSCXiTwr8ygoGLlHSLIJ3S7WRIiFCEA</string>
+    <string name="direction_key">AIzaSyAQF8XWoqk8zeIt0x-67qgzDZrhVgVe8k8</string>
     <string name="title_GPS_Not_Enabled">GPS Not Enabled</string>
     <string name="message_Do_you_wants_to_turn_On_GPS">Do you wants to turn On GPS</string>
     <string name="message_Yes">Yes</string>
@@ -21,4 +22,14 @@
     <string name="item_detail_tour_menu_people">Người tham gia</string>
     <string name="item_detail_tour_menu_delete_trip">Xóa chuyến đi</string>
     <string name="item_detail_tour_menu_merge_trip">Gộp chuyến đi</string>
+    <string name="item_share_detail_schedule_menu">Chia sẻ</string>
+    <string name="item_edit_plan_detail_schedule_menu">Chỉnh sửa kế hoạch</string>
+    <string name="item_move_plan_detail_schedule_menu">Di chuyển kế hoạch</string>
+    <string name="item_delete_plan_detail_schedule_menu">Xóa kế hoạch</string>
+    <string name="button_direction_text">Hướng đi</string>
+    <string name="button_detail_text">Chi tiết</string>
+    <string name="textView_text_view">View</string>
+    <string name="textView_text_contact_booking_infor"><![CDATA[Contact & Booking Infor]]></string>
+    <string name="current_position">Vị trí hiện tại</string>
+    <string name="cant_get_location">Không thể lấy vị trí hiện tại của bạn.</string>
 </resources>

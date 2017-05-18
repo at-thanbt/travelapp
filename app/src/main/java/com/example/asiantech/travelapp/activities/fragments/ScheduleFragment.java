@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.asiantech.travelapp.R;
 import com.example.asiantech.travelapp.activities.AddScheduleActivity;
 import com.example.asiantech.travelapp.activities.DetailTourActivity;
+import com.example.asiantech.travelapp.activities.ScheduleDetailActivity;
 import com.example.asiantech.travelapp.activities.adapters.ScheduleAdapter;
 import com.example.asiantech.travelapp.activities.objects.TourSchedule;
 import com.example.asiantech.travelapp.activities.response.ScheduleResponse;
@@ -33,7 +34,7 @@ import lombok.experimental.Accessors;
 /**
  * Created by phuong on 08/04/2017.
  */
-public class ScheduleFragment extends Fragment {
+public class ScheduleFragment extends Fragment implements ScheduleAdapter.OnTourScheduleListener {
     private FloatingActionButton mBtnAddSchedule;
     private RecyclerView mRecyclerViewSchedule;
     private TextView mTvNoSchedule;
@@ -68,7 +69,7 @@ public class ScheduleFragment extends Fragment {
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerViewSchedule.setLayoutManager(layoutManager);
-        ScheduleAdapter adapter = new ScheduleAdapter(mTourSchedules);
+        ScheduleAdapter adapter = new ScheduleAdapter(mTourSchedules, this);
         mRecyclerViewSchedule.setAdapter(adapter);
 
         return view;
@@ -87,12 +88,14 @@ public class ScheduleFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mProgressBarLoading.setVisibility(View.GONE);
                 ScheduleResponse response = dataSnapshot.getValue(ScheduleResponse.class);
-                mTourSchedules.addAll(response.getSchedules());
-                mTvTitle.setText(response.getTitle());
-                if (mTourSchedules.size() == 0) {
-                    mTvNoSchedule.setVisibility(View.VISIBLE);
-                } else {
-                    mRecyclerViewSchedule.getAdapter().notifyDataSetChanged();
+                if (response != null) {
+                    mTourSchedules.addAll(response.getSchedules());
+                    mTvTitle.setText(response.getTitle());
+                    if (mTourSchedules.size() == 0) {
+                        mTvNoSchedule.setVisibility(View.VISIBLE);
+                    } else {
+                        mRecyclerViewSchedule.getAdapter().notifyDataSetChanged();
+                    }
                 }
             }
 
@@ -102,4 +105,13 @@ public class ScheduleFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onTourScheduleClick(int position) {
+        TourSchedule tourSchedule = mTourSchedules.get(position);
+        Intent intent = new Intent(getContext(), ScheduleDetailActivity.class);
+        intent.putExtra(ScheduleDetailActivity.TITLE_KEY, mTvTitle.getText().toString());
+        intent.putExtra(ScheduleDetailActivity.TOUR_SCHEDULE_DATE_ID, tourSchedule.getIdTourSchedule());
+        intent.putExtra(ScheduleDetailActivity.DATE_TIME_KEY, tourSchedule.getDate());
+        startActivity(intent);
+    }
 }

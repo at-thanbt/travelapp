@@ -16,16 +16,18 @@ import java.util.List;
  */
 
 public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ItemTourScheduleVH> {
-    private List<TourSchedule> mTourSchedules;
+    private final List<TourSchedule> mTourSchedules;
+    private final OnTourScheduleListener mOnTourScheduleListener;
 
-    public ScheduleAdapter(List<TourSchedule> mTourSchedules) {
+    public ScheduleAdapter(List<TourSchedule> mTourSchedules, OnTourScheduleListener mOnTourScheduleListener) {
         this.mTourSchedules = mTourSchedules;
+        this.mOnTourScheduleListener = mOnTourScheduleListener;
     }
 
     @Override
     public ItemTourScheduleVH onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_schedule, parent, false);
-        return new ItemTourScheduleVH(view);
+        return new ItemTourScheduleVH(view, mOnTourScheduleListener);
     }
 
     @Override
@@ -40,15 +42,30 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ItemTo
         return mTourSchedules == null ? 0 : mTourSchedules.size();
     }
 
-    class ItemTourScheduleVH extends RecyclerView.ViewHolder {
+    /**
+     * OnTourScheduleListener
+     */
+    public interface OnTourScheduleListener {
+        void onTourScheduleClick(int position);
+    }
+
+    static class ItemTourScheduleVH extends RecyclerView.ViewHolder {
         private TextView mTvTime;
         private TextView mTvDescription;
 
-        ItemTourScheduleVH(View itemView) {
+        ItemTourScheduleVH(View itemView, final OnTourScheduleListener onTourScheduleListener) {
             super(itemView);
             mTvTime = (TextView) itemView.findViewById(R.id.tvDate);
             mTvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onTourScheduleListener != null) {
+                        onTourScheduleListener.onTourScheduleClick(getLayoutPosition());
+                    }
+                }
+            });
         }
     }
-
 }
