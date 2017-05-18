@@ -1,6 +1,7 @@
 package com.example.asiantech.travelapp.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -58,6 +59,7 @@ public class ScheduleDetailActivity extends BaseActivity implements ScheduleDeta
     private static final int REQUEST_LOCATION_ID = 231;
     private static final int DEFAULT_LAT_LNG_BOUND_PADDING = 70;
     private static final int DEFAULT_DIRECTION_STROKE_WIDTH = 2;
+    private static final int ADD_DAY_REQUEST_CODE = 144;
     private Toolbar mToolbar;
     private TextView mTvDateTime;
     private TextView mTvTitle;
@@ -71,6 +73,7 @@ public class ScheduleDetailActivity extends BaseActivity implements ScheduleDeta
     private String mTourScheduleId;
     private LatLng mCurrentPosition;
     private LatLng mSchedulePosition;
+    private Marker mScheduleMarker;
     private Marker mUserMarker;
     private DaySchedule mCurrentSchedule;
     private Polyline mDirection;
@@ -127,6 +130,7 @@ public class ScheduleDetailActivity extends BaseActivity implements ScheduleDeta
         firebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                mDaySchedules.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     mDaySchedules.add(data.getValue(DaySchedule.class));
                 }
@@ -157,6 +161,10 @@ public class ScheduleDetailActivity extends BaseActivity implements ScheduleDeta
             case R.id.itemShare:
                 // TODO: 18/05/2017 Handle when click share
                 break;
+            case R.id.itemAddDay:
+                Intent intent = new Intent(this, AddDayScheduleActivity.class);
+                intent.putExtra(AddDayScheduleActivity.ID_TOUR_SCHEDULE, mTourScheduleId);
+                startActivityForResult(intent, ADD_DAY_REQUEST_CODE);
             case R.id.itemEditPlan:
                 // TODO: 18/05/2017 Handle when click edit plan
                 break;
@@ -330,11 +338,18 @@ public class ScheduleDetailActivity extends BaseActivity implements ScheduleDeta
     private void loadSchedulePosition() {
         if (mCurrentSchedule != null) {
             mSchedulePosition = new LatLng(mCurrentSchedule.getLat(), mCurrentSchedule.getLng());
-            mGoogleMap.addMarker(new MarkerOptions()
+            if (mScheduleMarker != null) {
+                mScheduleMarker.remove();
+            }
+            mScheduleMarker = mGoogleMap.addMarker(new MarkerOptions()
                     .position(mSchedulePosition)
                     .title(mCurrentSchedule.getTitle())
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_location_24dp)));
-            mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds.Builder().include(mCurrentPosition).include(mSchedulePosition).build(), DEFAULT_LAT_LNG_BOUND_PADDING));
+            if (mCurrentPosition != null) {
+                mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds.Builder().include(mCurrentPosition).include(mSchedulePosition).build(), DEFAULT_LAT_LNG_BOUND_PADDING));
+            } else {
+                mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(mSchedulePosition, 15));
+            }
         }
     }
 
@@ -362,4 +377,13 @@ public class ScheduleDetailActivity extends BaseActivity implements ScheduleDeta
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ADD_DAY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                getDataFromServer();
+            }
+        }
+    }
 }
