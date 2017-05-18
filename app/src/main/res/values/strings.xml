@@ -32,4 +32,5 @@
     <string name="textView_text_contact_booking_infor"><![CDATA[Contact & Booking Infor]]></string>
     <string name="current_position">Vị trí hiện tại</string>
     <string name="cant_get_location">Không thể lấy vị trí hiện tại của bạn.</string>
+    <string name="item_add_plan_detail_schedule_menu">Thêm thời gian</string>
 </resources>
