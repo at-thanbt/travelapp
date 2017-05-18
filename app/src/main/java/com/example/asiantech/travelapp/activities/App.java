@@ -7,7 +7,7 @@ import android.app.Application;
  */
 
 public class App extends Application {
-    private static App ourInstance = new App();
+    private static App ourInstance ;
     private String idTour;
     private String nameTourist;
     private String idTourist;
@@ -61,6 +61,6 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        ourInstance = this;
     }
 }

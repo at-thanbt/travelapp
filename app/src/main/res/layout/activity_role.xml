@@ -5,6 +5,14 @@
     android:background="#f5ff66"
     android:orientation="vertical">
 
+    <ProgressBar
+        android:id="@+id/progressBarLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_margin="10dp"
+        android:visibility="gone" />
+
     <ImageView
         android:id="@+id/image"
         android:layout_width="100dp"
@@ -30,8 +38,8 @@
         android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/tvname"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:orientation="horizontal">
 
@@ -57,9 +65,9 @@
         android:layout_height="50dp"
         android:layout_below="@+id/radioGroup"
         android:layout_centerHorizontal="true"
-        android:textColor="@android:color/white"
-        android:background="#0983C5"
         android:layout_marginTop="40dp"
-        android:text="Tiếp tục" />
+        android:background="#0983C5"
+        android:text="Tiếp tục"
+        android:textColor="@android:color/white" />
 
 </RelativeLayout>
