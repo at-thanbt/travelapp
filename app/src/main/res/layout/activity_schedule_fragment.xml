@@ -3,29 +3,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <ProgressBar
+        android:id="@+id/progressBarLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/progressBarLoading"
-        />
+        android:layout_centerInParent="true" />
 
     <TextView
+        android:id="@+id/tvNoSchedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:id="@+id/tvNoSchedule"
         android:text="Chưa có kế hoạch nào"
         android:textColor="@android:color/holo_red_light"
         android:textSize="20sp"
         android:textStyle="bold"
         android:visibility="gone" />
 
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@android:color/black"
+        android:textSize="16dp" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewSchedule"
         android:layout_width="match_parent"
-        android:layout_marginTop="10dp"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:layout_below="@id/tvTitle"
+        android:layout_marginTop="10dp" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnAddSchedule"

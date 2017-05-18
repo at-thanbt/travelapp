@@ -1,6 +1,5 @@
 package com.example.asiantech.travelapp.activities.adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.asiantech.travelapp.R;
-import com.example.asiantech.travelapp.activities.objects.Schedule;
+import com.example.asiantech.travelapp.activities.objects.TourSchedule;
 
 import java.util.List;
 
@@ -16,46 +15,57 @@ import java.util.List;
  * Created by phuong on 16/05/2017.
  */
 
-public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.MyVietHolder> {
-    private List<Schedule> mSchedules;
-    private Context mContext;
+public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.ItemTourScheduleVH> {
+    private final List<TourSchedule> mTourSchedules;
+    private final OnTourScheduleListener mOnTourScheduleListener;
 
-    public ScheduleAdapter(List<Schedule> mSchedules, Context mContext) {
-        this.mSchedules = mSchedules;
-        this.mContext = mContext;
+    public ScheduleAdapter(List<TourSchedule> mTourSchedules, OnTourScheduleListener mOnTourScheduleListener) {
+        this.mTourSchedules = mTourSchedules;
+        this.mOnTourScheduleListener = mOnTourScheduleListener;
     }
 
     @Override
-    public MyVietHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ItemTourScheduleVH onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_schedule, parent, false);
-        return new MyVietHolder(view);
+        return new ItemTourScheduleVH(view, mOnTourScheduleListener);
     }
 
     @Override
-    public void onBindViewHolder(MyVietHolder holder, int position) {
-        Schedule schedule = mSchedules.get(position);
-        holder.mTvNote.setText(schedule.getNote());
-        holder.mTvTime.setText(schedule.getTime());
-        holder.mTvLocation.setText(schedule.getLocation());
+    public void onBindViewHolder(ItemTourScheduleVH holder, int position) {
+        TourSchedule tourSchedule = mTourSchedules.get(position);
+        holder.mTvDescription.setText(tourSchedule.getDescription());
+        holder.mTvTime.setText(tourSchedule.getDate());
     }
 
     @Override
     public int getItemCount() {
-        return mSchedules == null ? 0 : mSchedules.size();
+        return mTourSchedules == null ? 0 : mTourSchedules.size();
     }
 
-    class MyVietHolder extends RecyclerView.ViewHolder {
+    /**
+     * OnTourScheduleListener
+     */
+    public interface OnTourScheduleListener {
+        void onTourScheduleClick(int position);
+    }
 
+    static class ItemTourScheduleVH extends RecyclerView.ViewHolder {
         private TextView mTvTime;
-        private TextView mTvLocation;
-        private TextView mTvNote;
+        private TextView mTvDescription;
 
-        public MyVietHolder(View itemView) {
+        ItemTourScheduleVH(View itemView, final OnTourScheduleListener onTourScheduleListener) {
             super(itemView);
-            mTvTime = (TextView) itemView.findViewById(R.id.idDate);
-            mTvLocation = (TextView) itemView.findViewById(R.id.idLocation);
-            mTvNote = (TextView) itemView.findViewById(R.id.idContent);
+            mTvTime = (TextView) itemView.findViewById(R.id.tvDate);
+            mTvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onTourScheduleListener != null) {
+                        onTourScheduleListener.onTourScheduleClick(getLayoutPosition());
+                    }
+                }
+            });
         }
     }
-
 }

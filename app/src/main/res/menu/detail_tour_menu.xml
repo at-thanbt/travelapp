@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemEditTrip"
+        android:title="@string/item_detail_tour_menu_edit" />
+    <item
+        android:id="@+id/itemAddPlan"
+        android:title="@string/item_detail_tour_menu_add_plan" />
+
+    <item
+        android:id="@+id/itemPeople"
+        android:title="@string/item_detail_tour_menu_people" />
+
+    <item
+        android:id="@+id/itemDeleteTrip"
+        android:title="@string/item_detail_tour_menu_delete_trip" />
+
+    <item
+        android:id="@+id/itemMergeTrip"
+        android:title="@string/item_detail_tour_menu_merge_trip" />
+</menu>

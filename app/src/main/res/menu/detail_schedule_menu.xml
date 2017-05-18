@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/itemShare"
+        android:title="@string/item_share_detail_schedule_menu" />
+
+    <item
+        android:id="@+id/itemEditPlan"
+        android:title="@string/item_edit_plan_detail_schedule_menu" />
+
+    <item
+        android:id="@+id/itemMovePlan"
+        android:title="@string/item_move_plan_detail_schedule_menu" />
+
+    <item
+        android:id="@+id/itemDeletePlan"
+        android:title="@string/item_delete_plan_detail_schedule_menu" />
+</menu>

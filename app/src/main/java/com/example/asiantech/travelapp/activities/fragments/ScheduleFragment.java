@@ -2,13 +2,11 @@ package com.example.asiantech.travelapp.activities.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +16,10 @@ import android.widget.TextView;
 import com.example.asiantech.travelapp.R;
 import com.example.asiantech.travelapp.activities.AddScheduleActivity;
 import com.example.asiantech.travelapp.activities.DetailTourActivity;
+import com.example.asiantech.travelapp.activities.ScheduleDetailActivity;
 import com.example.asiantech.travelapp.activities.adapters.ScheduleAdapter;
-import com.example.asiantech.travelapp.activities.objects.Schedule;
+import com.example.asiantech.travelapp.activities.objects.TourSchedule;
+import com.example.asiantech.travelapp.activities.response.ScheduleResponse;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -27,21 +27,25 @@ import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * Created by phuong on 08/04/2017.
  */
-
-public class ScheduleFragment extends Fragment {
+public class ScheduleFragment extends Fragment implements ScheduleAdapter.OnTourScheduleListener {
     private FloatingActionButton mBtnAddSchedule;
     private RecyclerView mRecyclerViewSchedule;
     private TextView mTvNoSchedule;
-    private DetailTourActivity mActivity;
     private ProgressBar mProgressBarLoading;
+    private TextView mTvTitle;
 
-    private List<Schedule> mSchedules;
-    private ScheduleAdapter mAdapter;
+    private List<TourSchedule> mTourSchedules = new ArrayList<>();
+
+    @Setter
+    @Accessors(prefix = "m")
+    private String mIdTour;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_schedule_fragment, container, false);
@@ -50,70 +54,60 @@ public class ScheduleFragment extends Fragment {
         mRecyclerViewSchedule = (RecyclerView) view.findViewById(R.id.recyclerViewSchedule);
         mTvNoSchedule = (TextView) view.findViewById(R.id.tvNoSchedule);
         mProgressBarLoading = (ProgressBar) view.findViewById(R.id.progressBarLoading);
-
-        mActivity = (DetailTourActivity) getActivity();
+        mTvTitle = (TextView) view.findViewById(R.id.tvTitle);
 
         mBtnAddSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), AddScheduleActivity.class);
-                intent.putExtra(HomeBlankFragment.ID_TOUR, mActivity.getIdTour());
+                if (getActivity() instanceof DetailTourActivity) {
+                    intent.putExtra(HomeBlankFragment.ID_TOUR, mIdTour);
+                }
                 startActivity(intent);
             }
         });
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mProgressBarLoading.setVisibility(View.GONE);
-                if (mSchedules.size() == 0) {
-                    mTvNoSchedule.setVisibility(View.VISIBLE);
-                } else {
-                    mAdapter.notifyDataSetChanged();
-                }
-            }
-        }, 6000);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        mRecyclerViewSchedule.setLayoutManager(layoutManager);
+        ScheduleAdapter adapter = new ScheduleAdapter(mTourSchedules, this);
+        mRecyclerViewSchedule.setAdapter(adapter);
+        getDataSchedule();
 
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getDataSchedule();
-
-    }
 
     public void getDataSchedule() {
-        Firebase firebaseSchedule = new Firebase(getString(R.string.URL_BASE) + "/schedule/" + mActivity.getIdTour());
-        mSchedules = new ArrayList<>();
-
+        Firebase firebaseSchedule = new Firebase(String.format("%sTourSchedules/%s", getString(R.string.URL_BASE), mIdTour));
         firebaseSchedule.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    Map map = data.getValue(Map.class);
-                    Schedule schedule = new Schedule();
-                    schedule.setIdTour(mActivity.getIdTour());
-                    schedule.setIdSchedule(map.get("idSchedule").toString());
-                    schedule.setLocation(map.get("location").toString());
-                    schedule.setNote(map.get("content").toString());
-                    schedule.setTime(map.get("time").toString());
-                    mSchedules.add(schedule);
+                mProgressBarLoading.setVisibility(View.GONE);
+                ScheduleResponse response = dataSnapshot.getValue(ScheduleResponse.class);
+                if (response != null) {
+                    mTourSchedules.addAll(response.getSchedules());
+                    mTvTitle.setText(response.getTitle());
+                    if (mTourSchedules.size() == 0) {
+                        mTvNoSchedule.setVisibility(View.VISIBLE);
+                    } else {
+                        mRecyclerViewSchedule.getAdapter().notifyDataSetChanged();
+                    }
                 }
-                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-                mRecyclerViewSchedule.setLayoutManager(layoutManager);
-                mAdapter = new ScheduleAdapter(mSchedules, getContext());
-                mRecyclerViewSchedule.setAdapter(mAdapter);
-                mTvNoSchedule.setVisibility(View.GONE);
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
             }
         });
     }
 
+    @Override
+    public void onTourScheduleClick(int position) {
+        TourSchedule tourSchedule = mTourSchedules.get(position);
+        Intent intent = new Intent(getContext(), ScheduleDetailActivity.class);
+        intent.putExtra(ScheduleDetailActivity.TITLE_KEY, mTvTitle.getText().toString());
+        intent.putExtra(ScheduleDetailActivity.TOUR_SCHEDULE_DATE_ID, tourSchedule.getIdTourSchedule());
+        intent.putExtra(ScheduleDetailActivity.DATE_TIME_KEY, tourSchedule.getDate());
+        startActivity(intent);
+    }
 }

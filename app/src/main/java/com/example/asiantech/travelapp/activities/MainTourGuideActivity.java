@@ -48,7 +48,7 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
         mToolbar = (Toolbar) findViewById(R.id.toolBar);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
         mRecyclerViewMenu = (RecyclerView) findViewById(R.id.frLeftMenuContainer);
-        mRlContainer = (View) findViewById(R.id.frMainContainer);
+        mRlContainer = findViewById(R.id.frMainContainer);
         inits();
     }
 
@@ -129,13 +129,13 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
 
     public void initsData() {
         mItems = new ArrayList<>();
-        mItems.add(new String("header"));
+        mItems.add("header");
         mItems.add(new MenuItem(R.drawable.ic_home, "Travel App"));
         mItems.add(new MenuItem(R.drawable.ic_user_infor, "Thông tin cá nhân"));
         mItems.add(new MenuItem(R.drawable.ic_create, "Chat"));
         mItems.add(new MenuItem(R.drawable.ic_settings, "Cài đặt"));
         mItems.add(new MenuItem(R.drawable.ic_logout, "Đăng xuất"));
-        mItems.add(new Integer(1));
+        mItems.add(1);
     }
 
     @Override

@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -32,9 +34,6 @@ public class DetailTourActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
-    private ImageView mImgAddPerson;
-    private ImageView mImgBack;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +41,6 @@ public class DetailTourActivity extends AppCompatActivity {
         mIdTour = getIntent().getStringExtra(HomeBlankFragment.ID_TOUR);
 
         toolbar = (Toolbar) findViewById(R.id.toolBar);
-        mImgAddPerson = (ImageView) toolbar.findViewById(R.id.imgAdd);
-        mImgBack = (ImageView) toolbar.findViewById(R.id.imgBack);
         setSupportActionBar(toolbar);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -52,16 +49,8 @@ public class DetailTourActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        mImgAddPerson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DetailTourActivity.this,AddTourristActivity.class);
-                intent.putExtra(HomeBlankFragment.ID_TOUR,mIdTour);
-                startActivity(intent);
-            }
-        });
-
-        mImgBack.setOnClickListener(new View.OnClickListener() {
+        ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
+        imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -69,22 +58,50 @@ public class DetailTourActivity extends AppCompatActivity {
         });
     }
 
-    public String getIdTour(){
-        return mIdTour;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.detail_tour_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.itemAddPlan:
+                // TODO: 17/05/2017 Handle click add plan
+                break;
+            case R.id.itemDeleteTrip:
+                // TODO: 17/05/2017 Handle click delete trip
+                break;
+            case R.id.itemEditTrip:
+                // TODO: 17/05/2017 Handle click edit trip
+                break;
+            case R.id.itemMergeTrip:
+                // TODO: 17/05/2017 Handle click merge trip
+                break;
+            case R.id.itemPeople:
+                Intent intent = new Intent(DetailTourActivity.this, AddTourristActivity.class);
+                intent.putExtra(HomeBlankFragment.ID_TOUR, mIdTour);
+                startActivity(intent);
+                break;
+        }
+        return false;
     }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ScheduleFragment(), "Kế Hoạch");
+        ScheduleFragment scheduleFragment = new ScheduleFragment();
+        scheduleFragment.setIdTour(mIdTour);
+        adapter.addFragment(scheduleFragment, "Kế Hoạch");
         adapter.addFragment(new NotifyFragment(), "Thông báo");
         viewPager.setAdapter(adapter);
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
+        ViewPagerAdapter(FragmentManager manager) {
             super(manager);
         }
 
@@ -98,7 +115,7 @@ public class DetailTourActivity extends AppCompatActivity {
             return mFragmentList.size();
         }
 
-        public void addFragment(Fragment fragment, String title) {
+        void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }

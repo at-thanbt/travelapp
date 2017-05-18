@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,7 +21,7 @@ import java.util.Map;
 /**
  * Created by asiantech on 11/03/2017.
  */
-public class LoginTourGuideActivity extends AppCompatActivity {
+public class LoginTourGuideActivity extends BaseActivity {
 
     String user, pass;
     private EditText mEdtUsername;
@@ -38,7 +36,7 @@ public class LoginTourGuideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_tourguide);
 
-        mFirebase.setAndroidContext(this);
+        Firebase.setAndroidContext(this);
         mFirebase = new Firebase("https://travelapp-4961a.firebaseio.com/user");
 
         mEdtUsername = (EditText) findViewById(R.id.edtUsername);
@@ -60,20 +58,21 @@ public class LoginTourGuideActivity extends AppCompatActivity {
                     mFirebase.addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                            pd.dismiss();
                             Map map = dataSnapshot.getValue(Map.class);
                             user = map.get("name").toString();
                             pass = map.get("pass").toString();
                             Intent intent;
                             if (user.equals(mEdtUsername.getText().toString()) && pass.equals(mEdtPass.getText().toString())) {
-                                mSharedPreferencesLogin = getSharedPreferences(Constant.DATA_USER_LOGIN,MODE_PRIVATE);
+                                mSharedPreferencesLogin = getSharedPreferences(Constant.DATA_USER_LOGIN, MODE_PRIVATE);
                                 SharedPreferences.Editor mEditor = mSharedPreferencesLogin.edit();
-                                mEditor.putString(Constant.NAME_USER_LOGIN,mEdtUsername.getText().toString());
-                                mEditor.putString(Constant.IS_USER_LOGIN,"true");
+                                mEditor.putString(Constant.NAME_USER_LOGIN, mEdtUsername.getText().toString());
+                                mEditor.putString(Constant.IS_USER_LOGIN, "true");
                                 mEditor.apply();
                                 intent = new Intent(LoginTourGuideActivity.this, MainTourGuideActivity.class);
                                 startActivity(intent);
                             } else {
-                                Log.d("tag11", "login fail");
+                                showMessageDialog(getString(R.string.username_or_password_invalid));
                             }
                         }
 
