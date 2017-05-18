@@ -165,7 +165,8 @@ public class AddTourActivity extends AppCompatActivity {
                 tour.setIdTour(UUID.randomUUID().toString());
                 tour.setMaximumPerson(Integer.parseInt(mEdtMaximumPerson.getText().toString()));
                 tour.setTourName(mEdtTourName.getText().toString());
-                tour.setUsernameTourGuide(mSharedPreferencesUserLogin.getString(Constant.NAME_USER_LOGIN, ""));
+                tour.setUsernameTourGuide(App.getInstance().getNameTourguide());
+                tour.setIdTourGuide(App.getInstance().getIdTourguide());
                 mFirebaseTour.push().setValue(tour);
 
                 Toast.makeText(AddTourActivity.this, "Tạo tour thành công", Toast.LENGTH_SHORT).show();
