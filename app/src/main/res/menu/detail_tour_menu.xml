@@ -21,7 +21,7 @@
         android:title="@string/item_detail_tour_menu_merge_trip" />
 
     <item android:id="@+id/itemSingleChat"
-        android:title="Chat với 1 tourist"/>
+        android:title="Lịch sử chat"/>
 
     <item
         android:id="@+id/itemGroupChat"

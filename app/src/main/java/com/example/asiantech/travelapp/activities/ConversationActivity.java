@@ -23,8 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConversationActivity extends AppCompatActivity implements ChildEventListener {
-    static final String USER_ID = "user-id";
-    static final String USER_NAME = "user-name";
+    public static final String USER_ID = "user-id";
+    public static final String USER_NAME = "user-name";
 
     private ConversationAdapter conversationAdapter;
     private Firebase userConversations;
@@ -45,27 +45,6 @@ public class ConversationActivity extends AppCompatActivity implements ChildEven
 
         Firebase.setAndroidContext(this);
         userConversations = new Firebase("https://travelapp-4961a.firebaseio.com/conversations").child(userId);
-        userConversations.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.hasChildren()) {
-                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                        Conversation conversation = snapshot.getValue(Conversation.class);
-                        conversationAdapter.conversations.add(conversation);
-                    }
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            conversationAdapter.notifyDataSetChanged();
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-            }
-        });
 
         userConversations.addChildEventListener(this);
     }

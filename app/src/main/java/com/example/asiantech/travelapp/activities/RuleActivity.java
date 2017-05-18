@@ -17,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.asiantech.travelapp.R;
+import com.example.asiantech.travelapp.activities.objects.Tour;
 import com.example.asiantech.travelapp.activities.utils.Constant;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -117,12 +118,34 @@ public class RuleActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null) {
-                    Map map = dataSnapshot.getValue(Map.class);
+                    final Map map = dataSnapshot.getValue(Map.class);
                     if (map.get("phone").toString().equals(phone)) {
                         Log.d("tag123"," cb "+map.get("idTour").toString());
                         App.getInstance().setIdTour(map.get("idTour").toString());
                         App.getInstance().setNameTourist(map.get("name").toString());
                         App.getInstance().setIdTourist(map.get("idUser").toString());
+
+                        new Firebase("https://travelapp-4961a.firebaseio.com/tours").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                if (dataSnapshot.hasChildren()) {
+                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                        Tour tour = snapshot.getValue(Tour.class);
+                                        if (tour.getIdTour().equals(map.get("idTour"))) {
+                                            String usernameTourGuide = tour.getUsernameTourGuide();
+                                            App.getInstance().setNameTourguide(usernameTourGuide);
+                                            break;
+                                        }
+                                    }
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
+
+                            }
+                        });
 
                         updateLogin();
                         mProgressBarLoading.setVisibility(View.GONE);

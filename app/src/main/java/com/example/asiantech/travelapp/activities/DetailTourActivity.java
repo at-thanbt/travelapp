@@ -97,6 +97,7 @@ public class DetailTourActivity extends AppCompatActivity {
             case R.id.itemSingleChat:
                 Intent intent1 = new Intent(this, ConversationActivity.class);
                 intent1.putExtra(ConversationActivity.USER_ID, App.getInstance().getIdTourguide());
+                intent1.putExtra(ConversationActivity.USER_NAME, App.getInstance().getNameTourguide());
                 startActivity(intent1);
                 break;
             case R.id.itemGroupChat:

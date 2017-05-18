@@ -4,16 +4,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
     <Button
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:layout_height="40dp"
         android:text="Lịch sử"
         android:id="@+id/btnHistory"
         />
     <Button
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_marginTop="30dp"
-        android:text="Tin nhắn"
+        android:text="Chat với tourguide"
         android:id="@+id/btnMessage"
         />
 </LinearLayout>

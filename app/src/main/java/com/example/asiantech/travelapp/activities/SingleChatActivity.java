@@ -23,15 +23,16 @@ import java.util.Date;
 import java.util.List;
 
 public class SingleChatActivity extends AppCompatActivity implements ChildEventListener, View.OnClickListener {
-    static final String CONVERSATION = "conversation";
-    static final String USER_ID = "user-id";
-    static final String USER_NAME = "user-name";
+    public static final String CONVERSATION = "conversation";
+    public static final String USER_ID = "user-id";
+    public static final String USER_NAME = "user-name";
     private Conversation conversation;
     private Firebase messagesRef;
     private MessageAdapter messageAdapter;
     private EditText inputView;
     private String userId;
     private String userName;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,8 @@ public class SingleChatActivity extends AppCompatActivity implements ChildEventL
         conversation = (Conversation) getIntent().getSerializableExtra(CONVERSATION);
 
         setTitle(conversation.getAnotherGuyName());
-        ((RecyclerView)findViewById(R.id.chat_view)).setAdapter(messageAdapter = new MessageAdapter(new ArrayList<Message>(), userId, userName));
+        recyclerView = (RecyclerView) findViewById(R.id.chat_view);
+        recyclerView.setAdapter(messageAdapter = new MessageAdapter(new ArrayList<Message>(), userId, userName));
 
         Firebase.setAndroidContext(this);
         messagesRef = new Firebase("https://travelapp-4961a.firebaseio.com/messages").child(conversation.getId());
