@@ -21,6 +21,8 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.Map;
+
 /**
  * Created by asiantech on 11/03/2017.
  */
@@ -31,10 +33,15 @@ public class RuleActivity extends AppCompatActivity {
     private Button mBtnChoose;
     private SharedPreferences mSharedPreferencesLogin;
 
+    private App mApp;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_role);
+        Firebase.setAndroidContext(this);
+        mApp = (App) getApplication();
+
         mSharedPreferencesLogin = getSharedPreferences(Constant.DATA_USER_LOGIN, MODE_PRIVATE);
         mRdgRole = (RadioGroup) findViewById(R.id.radioGroup);
         mRdbTourGuide = (RadioButton) findViewById(R.id.radioButton_tourgide);
@@ -51,21 +58,22 @@ public class RuleActivity extends AppCompatActivity {
                     } else {
                         intent = new Intent(RuleActivity.this, LoginTourGuideActivity.class);
                     }
+                    startActivity(intent);
                 } else {
                     //show dialog de nhap ma code
-
-                    intent = new Intent(RuleActivity.this, LoginTourRistActivity.class);
+                    showInputCode();
                 }
-                startActivity(intent);
+
             }
         });
     }
 
-    public void showInputCode(){
+    public void showInputCode() {
         final Dialog dialog = new Dialog(RuleActivity.this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_input_code);
-        final EditText edtCode = (EditText) dialog.findViewById(R.id.edtPrice);
+        final EditText edtPhone = (EditText) dialog.findViewById(R.id.edtPhone);
+        final EditText edtCode = (EditText) dialog.findViewById(R.id.edtCode);
         edtCode.requestFocus();
 
         Button btnOk = (Button) dialog.findViewById(R.id.tvBtnOk);
@@ -81,23 +89,34 @@ public class RuleActivity extends AppCompatActivity {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(edtCode.getText().toString().equals("")){
-                    Toast.makeText(RuleActivity.this,"Vui lòng nhập mã code",Toast.LENGTH_SHORT).show();
-                }
-                else{
-
+                if (edtCode.getText().toString().equals("")) {
+                    Toast.makeText(RuleActivity.this, "Vui lòng nhập mã code", Toast.LENGTH_SHORT).show();
+                } else {
+                    checkCode(edtCode.getText().toString(), edtPhone.getText().toString());
+                    dialog.dismiss();
                 }
             }
         });
-
+        dialog.show();
     }
 
-    public void checkCode(String code){
-        Firebase firebaseUser = new Firebase(getString(R.string.URL_BASE)+"/users");
+    public void checkCode(String code, final String phone) {
+        Firebase firebaseUser = new Firebase(getString(R.string.URL_BASE) + "/code/" + code);
         firebaseUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null) {
+                    Map map = dataSnapshot.getValue(Map.class);
+                    if (map.get("phone").toString().equals(phone)) {
+                        mApp.setIdTour(map.get("idTour").toString());
 
+                        Intent intent = new Intent(RuleActivity.this, LoginTourRistActivity.class);
+                        startActivity(intent);
+
+                    } else {
+                        Toast.makeText(RuleActivity.this, "Thông tin không chính xác", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
 
             @Override

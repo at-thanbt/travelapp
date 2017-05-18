@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dialog_width"
-    android:layout_height="200dp"
+    android:layout_height="300dp"
     android:orientation="vertical">
 
     <TextView
@@ -9,26 +9,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-
         android:layout_marginLeft="@dimen/textview_dialog_content_margin"
         android:layout_marginRight="@dimen/textview_dialog_content_margin"
         android:layout_marginTop="30dp"
-        android:text="Nhập mã code"
-        android:textColor="@color/textview_login"
+        android:text="Đăng Nhập"
+        android:textColor="@android:color/holo_red_dark"
         android:textSize="20sp" />
 
     <EditText
-        android:id="@+id/edtPrice"
+        android:id="@+id/edtPhone"
         android:layout_width="240dp"
-        android:layout_gravity="center_horizontal"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/bg_space_white"
+        android:hint="Số điện thoại"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp" />
+
+    <EditText
+        android:id="@+id/edtCode"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_space_white"
+        android:hint="Mã code"
         android:inputType="number"
         android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
         android:paddingTop="10dp" />
 
     <LinearLayout
