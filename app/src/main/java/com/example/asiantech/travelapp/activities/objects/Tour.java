@@ -2,6 +2,8 @@ package com.example.asiantech.travelapp.activities.objects;
 
 import java.sql.Date;
 
+import lombok.Getter;
+
 /**
  * Created by asiantech on 30/04/2017.
  */
@@ -13,6 +15,8 @@ public class Tour {
     private String startDate ;
     private String endDate ;
     private String usernameTourGuide;
+    @Getter
+    private String idTourGuide;
     private int maximumPerson;
 
     public int getMaximumPerson() {

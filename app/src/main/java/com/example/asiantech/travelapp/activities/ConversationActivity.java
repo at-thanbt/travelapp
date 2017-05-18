@@ -32,7 +32,7 @@ public class ConversationActivity extends AppCompatActivity {
         ((RecyclerView) findViewById(R.id.conversation_view)).setAdapter(conversationAdapter = new ConversationAdapter(new ArrayList<Conversation>()));
 
         Firebase.setAndroidContext(this);
-        userConversations = new Firebase("https://travelapp-4961a.firebaseio.com/conversations").child(App.getInstance().getUserId());
+        userConversations = new Firebase("https://travelapp-4961a.firebaseio.com/conversations").child(App.getInstance().getIdTourist());
         userConversations.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -94,10 +94,12 @@ public class ConversationActivity extends AppCompatActivity {
         public int getItemCount() {
             return conversations.size();
         }
+
         class ConversationViewHolder extends RecyclerView.ViewHolder {
             final TextView nameView;
 
             Conversation conversation;
+
             ConversationViewHolder(View itemView) {
                 super(itemView);
                 nameView = (TextView) itemView.findViewById(R.id.name_view);

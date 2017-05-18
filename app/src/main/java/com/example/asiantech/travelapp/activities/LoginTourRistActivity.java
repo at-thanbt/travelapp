@@ -23,6 +23,10 @@ import com.example.asiantech.travelapp.activities.fragments.ScheduleTourFragment
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
 /**
  * Created by asiantech on 11/03/2017.
  */
@@ -41,8 +45,63 @@ public class LoginTourRistActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        enableChat();
     }
 
+    private void enableChat() {
+        findViewById(R.id.chat_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Firebase.setAndroidContext(LoginTourRistActivity.this);
+                new Firebase("https://travelapp-4961a.firebaseio.com/tours").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.hasChildren()) {
+                            String tourId = App.getInstance().getIdTour();
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                Tour tour = snapshot.getValue(Tour.class);
+                                if (tourId.equals(tour.getIdTour())) {
+                                    String tourguideId = tour.getIdTourGuide();
+                                    Firebase conversationRef = new Firebase("https://travelapp-4961a.firebaseio.com/conversations");
+                                    String conversationId = UUID.randomUUID().toString();
+
+                                    Conversation tourguideConversation = new Conversation();
+                                    tourguideConversation.setId(conversationId);
+                                    tourguideConversation.setAnotherGuyName(App.getInstance().getNameTourist());
+                                    Map<String, Object> tourguideMap = new HashMap<>();
+                                    tourguideMap.put(conversationId, tourguideConversation);
+                                    conversationRef.child(tourguideId).setValue(tourguideMap);
+
+                                    final Conversation touristConversation = new Conversation();
+                                    touristConversation.setId(conversationId);
+                                    touristConversation.setAnotherGuyName(App.getInstance().getNameTourguide());
+                                    Map<String, Object> touristMap = new HashMap<>();
+                                    touristMap.put(conversationId, touristConversation);
+                                    conversationRef.child(App.getInstance().getIdTourist()).setValue(touristMap);
+
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Intent intent = new Intent(LoginTourRistActivity.this, SingleChatActivity.class);
+                                            intent.putExtra(SingleChatActivity.CONVERSATION, touristConversation);
+                                            startActivity(intent);
+                                        }
+                                    });
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
+            }
+        });
+    }
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());

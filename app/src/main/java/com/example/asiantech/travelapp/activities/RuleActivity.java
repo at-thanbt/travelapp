@@ -78,6 +78,8 @@ public class RuleActivity extends AppCompatActivity {
         final EditText edtPhone = (EditText) dialog.findViewById(R.id.edtPhone);
         final EditText edtCode = (EditText) dialog.findViewById(R.id.edtCode);
         edtCode.requestFocus();
+        edtPhone.setText("+841668583242");
+        edtCode.setText("1340");
 
         Button btnOk = (Button) dialog.findViewById(R.id.tvBtnOk);
         Button btnCancel = (Button) dialog.findViewById(R.id.btnCancel);

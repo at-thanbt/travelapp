@@ -38,7 +38,7 @@ public class SingleChatActivity extends AppCompatActivity implements ChildEventL
         conversation = (Conversation) getIntent().getSerializableExtra(CONVERSATION);
 
         setTitle(conversation.getAnotherGuyName());
-        ((RecyclerView)findViewById(R.id.chat_view)).setAdapter(messageAdapter = new MessageAdapter(new ArrayList<Message>(), App.getInstance().getUserId(), App.getInstance().getName()));
+        ((RecyclerView)findViewById(R.id.chat_view)).setAdapter(messageAdapter = new MessageAdapter(new ArrayList<Message>(), App.getInstance().getIdTourist(), App.getInstance().getNameTourist()));
 
         Firebase.setAndroidContext(this);
         messagesRef = new Firebase("https://travelapp-4961a.firebaseio.com/messages").child(conversation.getId());
@@ -104,13 +104,15 @@ public class SingleChatActivity extends AppCompatActivity implements ChildEventL
         Message message = new Message();
         message.setId(messageId);
         message.setContent(text);
-        message.setSenderId(App.getInstance().getUserId());
+        message.setSenderId(App.getInstance().getIdTourist());
         message.setTimestamp(new Date().getTime());
 
         //messageAdapter.messages.add(message);
         //messageAdapter.notifyDataSetChanged();
 
         messageRef.setValue(message);
+
+        inputView.setText("");
     }
 
     class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
