@@ -1,10 +1,8 @@
 package com.example.asiantech.travelapp.activities;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +11,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -35,7 +32,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
@@ -61,10 +57,7 @@ public class AddTourristActivity extends AppCompatActivity {
 
         mIdTour = getIntent().getStringExtra(HomeBlankFragment.ID_TOUR);
         initData();
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        mRecyclerViewListTourist.setLayoutManager(layoutManager);
-        mAdapter = new ListTouristAdapter(this, mTourists);
-        mRecyclerViewListTourist.setAdapter(mAdapter);
+
         mBtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,11 +106,12 @@ public class AddTourristActivity extends AppCompatActivity {
                         RequestQueue rQueue = Volley.newRequestQueue(AddTourristActivity.this);
                         rQueue.add(request);
                         Firebase.setAndroidContext(AddTourristActivity.this);
-                        myFirebaseRef = new Firebase("https://travelapp-4961a.firebaseio.com/user/"+mIdTour);
+                        myFirebaseRef = new Firebase("https://travelapp-4961a.firebaseio.com/user/" + mIdTour);
                         Map<String, String> map = new HashMap<String, String>();
                         map.put("id", UUID.randomUUID().toString());
                         map.put("name", "");
                         map.put("pass", content1);
+                        map.put("joined","false");
                         map.put("phonenumber", edtPrice.getText().toString());
 
                         myFirebaseRef.push().setValue(map);
@@ -132,21 +126,25 @@ public class AddTourristActivity extends AppCompatActivity {
 
     public void initData() {
         mTourists = new ArrayList<>();
-        myFirebaseRef = new Firebase("https://travelapp-4961a.firebaseio.com/user/"+mIdTour);
+        myFirebaseRef = new Firebase("https://travelapp-4961a.firebaseio.com/user/" + mIdTour);
         myFirebaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot data : snapshot.getChildren()) {
+                    Log.d("tag123", "data " + data.toString());
                     Map map = data.getValue(Map.class);
-                    String key = data.getKey();
-                    if (!map.get("id").toString().equals("1")) {
-                        User user = new User();
-                        user.setId(key);
-                        user.setPhoneNumber(map.get("phonenumber").toString());
-                        mTourists.add(user);
-                        Log.d("tag123", "user 123" +mTourists.toString()+" key "+key+" number phone "+map.get("phonenumber").toString());
-                    }
+
+                    User user = new User();
+                    user.setPhoneNumber(map.get("phonenumber").toString());
+                    user.setPass(map.get("pass").toString());
+
+                    mTourists.add(user);
                 }
+
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(AddTourristActivity.this);
+                mRecyclerViewListTourist.setLayoutManager(layoutManager);
+                mAdapter = new ListTouristAdapter(AddTourristActivity.this, mTourists);
+                mRecyclerViewListTourist.setAdapter(mAdapter);
             }
 
             @Override
