@@ -1,5 +1,6 @@
 package com.example.asiantech.travelapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -79,7 +80,9 @@ public class DetailTourActivity extends AppCompatActivity {
                 // TODO: 17/05/2017 Handle click merge trip
                 break;
             case R.id.itemPeople:
-                // TODO: 17/05/2017 Handle click people
+                Intent intent = new Intent(DetailTourActivity.this, AddTourristActivity.class);
+                intent.putExtra(HomeBlankFragment.ID_TOUR, mIdTour);
+                startActivity(intent);
                 break;
         }
         return false;

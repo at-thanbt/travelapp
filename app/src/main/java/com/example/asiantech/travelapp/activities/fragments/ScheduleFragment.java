@@ -71,15 +71,11 @@ public class ScheduleFragment extends Fragment implements ScheduleAdapter.OnTour
         mRecyclerViewSchedule.setLayoutManager(layoutManager);
         ScheduleAdapter adapter = new ScheduleAdapter(mTourSchedules, this);
         mRecyclerViewSchedule.setAdapter(adapter);
+        getDataSchedule();
 
         return view;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getDataSchedule();
-    }
 
     public void getDataSchedule() {
         Firebase firebaseSchedule = new Firebase(String.format("%sTourSchedules/%s", getString(R.string.URL_BASE), mIdTour));
