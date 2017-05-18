@@ -8,6 +8,15 @@ import android.app.Application;
 
 public class App extends Application{
     private String idTour;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getIdTour() {
         return idTour;

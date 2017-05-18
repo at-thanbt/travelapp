@@ -66,6 +66,7 @@ public class AddTourristActivity extends AppCompatActivity {
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setContentView(R.layout.dialog_add_tourist);
                 final EditText edtPrice = (EditText) dialog.findViewById(R.id.edtPrice);
+                final EditText edtName = (EditText) dialog.findViewById(R.id.edtName);
                 edtPrice.requestFocus();
 
                 Button btnOk = (Button) dialog.findViewById(R.id.tvBtnOk);
@@ -81,6 +82,17 @@ public class AddTourristActivity extends AppCompatActivity {
                 btnOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if (isEmpty(edtName.getText().toString())) {
+                            Toast.makeText(AddTourristActivity.this, "Vui lòng nhập tên", Toast.LENGTH_SHORT).show();
+                            edtName.findFocus();
+                            return;
+                        }
+
+                        if (isEmpty(edtPrice.getText().toString())) {
+                            Toast.makeText(AddTourristActivity.this, "Vui lòng nhập số điện thoại", Toast.LENGTH_SHORT).show();
+                            edtPrice.findFocus();
+                            return;
+                        }
 
                         String url = "https://rest.nexmo.com/sms/json?api_key=49cb9691&api_secret=19d1379d8098c4b0&";
                         url += "to=" + edtPrice.getText().toString() + "&";
@@ -108,13 +120,13 @@ public class AddTourristActivity extends AppCompatActivity {
                         myFirebaseRef = new Firebase("https://travelapp-4961a.firebaseio.com/user/" + mIdTour);
                         Map<String, String> map = new HashMap<String, String>();
                         map.put("id", UUID.randomUUID().toString());
-                        map.put("name", "");
+                        map.put("name", edtName.getText().toString());
                         map.put("pass", content1);
                         map.put("joined", "false");
                         map.put("phonenumber", edtPrice.getText().toString());
                         myFirebaseRef.push().setValue(map);
 
-                        addCode(edtPrice.getText().toString(), content1, mIdTour);
+                        addCode(edtPrice.getText().toString(), content1, mIdTour, edtName.getText().toString());
 
                         User user = new User();
                         user.setPhoneNumber(edtPrice.getText().toString());
@@ -130,10 +142,18 @@ public class AddTourristActivity extends AppCompatActivity {
 
     }
 
-    public void addCode(String phone, String code, String idTour) {
+    public boolean isEmpty(String input) {
+        if (input.length() == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public void addCode(String phone, String code, String idTour, String name) {
         Firebase firebaseCode = new Firebase(getString(R.string.URL_BASE) + "/code");
         Map map = new HashMap();
         map.put("phone", phone);
+        map.put("name", name);
         map.put("idTour", idTour);
         firebaseCode.child(code).setValue(map);
     }
@@ -141,12 +161,9 @@ public class AddTourristActivity extends AppCompatActivity {
     public void initData() {
         mTourists = new ArrayList<>();
         myFirebaseRef = new Firebase("https://travelapp-4961a.firebaseio.com/user/" + mIdTour);
-        Log.d("tag123", "inits");
         myFirebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("tag123", "inits2");
-
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Map map = data.getValue(Map.class);
 

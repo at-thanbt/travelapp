@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -109,6 +110,7 @@ public class RuleActivity extends AppCompatActivity {
                     Map map = dataSnapshot.getValue(Map.class);
                     if (map.get("phone").toString().equals(phone)) {
                         mApp.setIdTour(map.get("idTour").toString());
+                        mApp.setName(map.get("name").toString());
 
                         Intent intent = new Intent(RuleActivity.this, LoginTourRistActivity.class);
                         startActivity(intent);
