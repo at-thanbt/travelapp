@@ -6,10 +6,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -33,17 +35,17 @@ public class RuleActivity extends AppCompatActivity {
     private Button mBtnChoose;
     private SharedPreferences mSharedPreferencesLogin;
 
-    private App mApp;
     private Firebase firebaseUser;
+    private ProgressBar mProgressBarLoading;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_role);
         Firebase.setAndroidContext(this);
-        mApp = (App) getApplication();
 
         mSharedPreferencesLogin = getSharedPreferences(Constant.DATA_USER_LOGIN, MODE_PRIVATE);
+        mProgressBarLoading = (ProgressBar) findViewById(R.id.progressBarLoading);
         mRdgRole = (RadioGroup) findViewById(R.id.radioGroup);
         mRdbTourGuide = (RadioButton) findViewById(R.id.radioButton_tourgide);
         mRdbTourRist = (RadioButton) findViewById(R.id.radioButton_tourist);
@@ -93,6 +95,7 @@ public class RuleActivity extends AppCompatActivity {
                 if (edtCode.getText().toString().equals("")) {
                     Toast.makeText(RuleActivity.this, "Vui lòng nhập mã code", Toast.LENGTH_SHORT).show();
                 } else {
+                    mProgressBarLoading.setVisibility(View.VISIBLE);
                     checkCode(edtCode.getText().toString(), edtPhone.getText().toString());
                     dialog.dismiss();
                 }
@@ -113,14 +116,16 @@ public class RuleActivity extends AppCompatActivity {
                 if (dataSnapshot != null) {
                     Map map = dataSnapshot.getValue(Map.class);
                     if (map.get("phone").toString().equals(phone)) {
-                        mApp.setIdTour(map.get("idTour").toString());
-                        mApp.setNameTourist(map.get("name").toString());
-                        mApp.setIdTourist(map.get("idUser").toString());
+                        Log.d("tag123"," cb "+map.get("idTour").toString());
+                        App.getInstance().setIdTour(map.get("idTour").toString());
+                        App.getInstance().setNameTourist(map.get("name").toString());
+                        App.getInstance().setIdTourist(map.get("idUser").toString());
 
                         updateLogin();
-
+                        mProgressBarLoading.setVisibility(View.GONE);
                         Intent intent = new Intent(RuleActivity.this, LoginTourRistActivity.class);
                         startActivity(intent);
+                        finish();
 
                     } else {
                         Toast.makeText(RuleActivity.this, "Thông tin không chính xác", Toast.LENGTH_SHORT).show();
