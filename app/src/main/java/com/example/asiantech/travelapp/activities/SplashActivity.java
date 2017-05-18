@@ -24,7 +24,7 @@ public class SplashActivity extends AppCompatActivity{
             public void run() {
                 Intent mainIntent = new Intent(SplashActivity.this, RuleActivity.class);
                 startActivity(mainIntent);
-               // SplashActivity.this.finish();
+                finish();
 
             }
         },SPLASH_DISPLAY_LENGHT);
