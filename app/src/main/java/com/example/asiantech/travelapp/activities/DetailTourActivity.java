@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.asiantech.travelapp.R;
 import com.example.asiantech.travelapp.activities.fragments.HomeBlankFragment;
@@ -45,6 +47,14 @@ public class DetailTourActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        ImageView imgBack = (ImageView) findViewById(R.id.imgBack);
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -75,22 +85,20 @@ public class DetailTourActivity extends AppCompatActivity {
         return false;
     }
 
-    public String getIdTour() {
-        return mIdTour;
-    }
-
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ScheduleFragment(), "Kế Hoạch");
+        ScheduleFragment scheduleFragment = new ScheduleFragment();
+        scheduleFragment.setIdTour(mIdTour);
+        adapter.addFragment(scheduleFragment, "Kế Hoạch");
         adapter.addFragment(new NotifyFragment(), "Thông báo");
         viewPager.setAdapter(adapter);
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
+    private class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
+        ViewPagerAdapter(FragmentManager manager) {
             super(manager);
         }
 
@@ -104,7 +112,7 @@ public class DetailTourActivity extends AppCompatActivity {
             return mFragmentList.size();
         }
 
-        public void addFragment(Fragment fragment, String title) {
+        void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
             mFragmentTitleList.add(title);
         }

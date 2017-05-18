@@ -37,6 +37,9 @@
         <activity android:name=".activities.AddScheduleActivity" />
         <activity android:name=".activities.ChatActivity" />
         <activity android:name=".activities.AddTourActivity" />
+        <activity
+            android:name=".activities.ScheduleDetailActivity"
+            android:screenOrientation="portrait" />
 
     </application>
 
