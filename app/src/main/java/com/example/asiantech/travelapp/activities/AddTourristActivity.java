@@ -96,7 +96,7 @@ public class AddTourristActivity extends AppCompatActivity {
                         rQueue.add(request);
                         User user = new User(UUID.randomUUID().toString(), "", content1, mEdtAdd.getText().toString());
                         Firebase.setAndroidContext(AddTourristActivity.this);
-                        myFirebaseRef = new Firebase("https://travelapp-4961a.firebaseio.com/user");
+                        myFirebaseRef = new Firebase(getString(R.string.URL_BASE)+"/user");
                         Map<String, String> map = new HashMap<String, String>();
                         map.put("id", UUID.randomUUID().toString());
                         map.put("name", "");
