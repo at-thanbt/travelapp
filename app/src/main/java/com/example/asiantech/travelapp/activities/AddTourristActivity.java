@@ -1,15 +1,16 @@
 package com.example.asiantech.travelapp.activities;
 
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,6 +21,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.asiantech.travelapp.R;
 import com.example.asiantech.travelapp.activities.adapters.ListTouristAdapter;
+import com.example.asiantech.travelapp.activities.fragments.HomeBlankFragment;
 import com.example.asiantech.travelapp.activities.objects.User;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -30,7 +32,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
@@ -43,38 +44,46 @@ public class AddTourristActivity extends AppCompatActivity {
     private List<User> mTourists;
     private RecyclerView mRecyclerViewListTourist;
     private ListTouristAdapter mAdapter;
-    private ImageButton mBtnAdd;
-    private EditText mEdtAdd;
+    private FloatingActionButton mBtnAdd;
+
+    private String mIdTour;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tourrist);
         Firebase.setAndroidContext(this);
         mRecyclerViewListTourist = (RecyclerView) findViewById(R.id.rcvListTourist);
-        mBtnAdd = (ImageButton) findViewById(R.id.btnAdd);
-        mEdtAdd = (EditText) findViewById(R.id.edtAddTourist);
+        mBtnAdd = (FloatingActionButton) findViewById(R.id.btnAddTourist);
 
+        mIdTour = getIntent().getStringExtra(HomeBlankFragment.ID_TOUR);
         initData();
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        mRecyclerViewListTourist.setLayoutManager(layoutManager);
-        mAdapter = new ListTouristAdapter(this, mTourists);
-        mRecyclerViewListTourist.setAdapter(mAdapter);
+
         mBtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder b = new AlertDialog.Builder(AddTourristActivity.this);
 
-                b.setTitle("Question");
-                b.setMessage("Do you want to add this tourist");
-                b.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                final Dialog dialog = new Dialog(AddTourristActivity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setContentView(R.layout.dialog_add_tourist);
+                final EditText edtPrice = (EditText) dialog.findViewById(R.id.edtPrice);
+                edtPrice.requestFocus();
+
+                Button btnOk = (Button) dialog.findViewById(R.id.tvBtnOk);
+                Button btnCancel = (Button) dialog.findViewById(R.id.btnCancel);
+
+                btnCancel.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
 
-                        mTourists.add(new User(mEdtAdd.getText().toString()));
-                        mAdapter.notifyDataSetChanged();
+                btnOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
                         String url = "https://rest.nexmo.com/sms/json?api_key=49cb9691&api_secret=19d1379d8098c4b0&";
-                        url += "to=" + mEdtAdd.getText().toString() + "&";
+                        url += "to=" + edtPrice.getText().toString() + "&";
                         url += "from=travelApp" + "&";
                         String content1 = String.valueOf(new Random().nextInt(10000));
                         Log.d("tag11", "content" + content1);
@@ -94,58 +103,68 @@ public class AddTourristActivity extends AppCompatActivity {
                         });
                         RequestQueue rQueue = Volley.newRequestQueue(AddTourristActivity.this);
                         rQueue.add(request);
-                        User user = new User(UUID.randomUUID().toString(), "", content1, mEdtAdd.getText().toString());
+
                         Firebase.setAndroidContext(AddTourristActivity.this);
-                        myFirebaseRef = new Firebase(getString(R.string.URL_BASE)+"/user");
+                        myFirebaseRef = new Firebase("https://travelapp-4961a.firebaseio.com/user/" + mIdTour);
                         Map<String, String> map = new HashMap<String, String>();
                         map.put("id", UUID.randomUUID().toString());
                         map.put("name", "");
                         map.put("pass", content1);
-                        map.put("phonenumber", mEdtAdd.getText().toString());
-
+                        map.put("joined", "false");
+                        map.put("phonenumber", edtPrice.getText().toString());
                         myFirebaseRef.push().setValue(map);
-                        mEdtAdd.setText("");
+
+                        addCode(edtPrice.getText().toString(), content1, mIdTour);
+
+                        User user = new User();
+                        user.setPhoneNumber(edtPrice.getText().toString());
+                        mTourists.add(user);
+                        mAdapter.notifyDataSetChanged();
+
+                        dialog.dismiss();
                     }
                 });
-                b.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-
-                    public void onClick(DialogInterface dialog, int which)
-
-                    {
-                        dialog.cancel();
-
-                    }
-
-                });
-                b.create().show();
+                dialog.show();
             }
         });
 
     }
 
+    public void addCode(String phone, String code, String idTour) {
+        Firebase firebaseCode = new Firebase(getString(R.string.URL_BASE) + "/code");
+        Map map = new HashMap();
+        map.put("phone", phone);
+        map.put("idTour", idTour);
+        firebaseCode.child(code).setValue(map);
+    }
+
     public void initData() {
         mTourists = new ArrayList<>();
-        myFirebaseRef = new Firebase("https://travelapp-4961a.firebaseio.com/user");
-        myFirebaseRef.addValueEventListener(new ValueEventListener() {
+        myFirebaseRef = new Firebase("https://travelapp-4961a.firebaseio.com/user/" + mIdTour);
+        Log.d("tag123", "inits");
+        myFirebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("tag123", "inits2");
+
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Map map = data.getValue(Map.class);
-                    String key = data.getKey();
-                    if (!map.get("id").toString().equals("1")) {
-                        User user = new User();
-                        user.setId(key);
-                        user.setPhoneNumber(map.get("phonenumber").toString());
-                        mTourists.add(user);
-                        Log.d("tag123", "user 123" +mTourists.toString()+" key "+key+" number phone "+map.get("phonenumber").toString());
-                    }
+
+                    User user = new User();
+                    user.setPhoneNumber(map.get("phonenumber").toString());
+                    user.setPass(map.get("pass").toString());
+                    mTourists.add(user);
                 }
+
+                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(AddTourristActivity.this);
+                mRecyclerViewListTourist.setLayoutManager(layoutManager);
+                mAdapter = new ListTouristAdapter(AddTourristActivity.this, mTourists);
+                mRecyclerViewListTourist.setAdapter(mAdapter);
             }
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                Log.e("The read failed: ", firebaseError.getMessage());
+
             }
         });
 
