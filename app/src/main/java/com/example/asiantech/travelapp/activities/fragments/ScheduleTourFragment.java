@@ -1,5 +1,6 @@
 package com.example.asiantech.travelapp.activities.fragments;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,13 +12,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.asiantech.travelapp.R;
 import com.example.asiantech.travelapp.activities.AddScheduleActivity;
 import com.example.asiantech.travelapp.activities.App;
 import com.example.asiantech.travelapp.activities.DetailTourActivity;
+import com.example.asiantech.travelapp.activities.RuleActivity;
 import com.example.asiantech.travelapp.activities.ScheduleDetailActivity;
 import com.example.asiantech.travelapp.activities.adapters.ScheduleAdapter;
 import com.example.asiantech.travelapp.activities.objects.TourSchedule;
@@ -38,7 +44,6 @@ import lombok.experimental.Accessors;
  */
 
 public class ScheduleTourFragment extends Fragment implements ScheduleAdapter.OnTourScheduleListener  {
-    private FloatingActionButton mBtnAddSchedule;
     private RecyclerView mRecyclerViewSchedule;
     private TextView mTvNoSchedule;
     private ProgressBar mProgressBarLoading;
@@ -47,28 +52,17 @@ public class ScheduleTourFragment extends Fragment implements ScheduleAdapter.On
     private List<TourSchedule> mTourSchedules = new ArrayList<>();
 
     private String mIdTour;
+    private FloatingActionButton mBtnAdd;
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_schedule_fragment, container, false);
-
+        mBtnAdd = (FloatingActionButton) view.findViewById(R.id.btnAddSchedule);
         mIdTour = App.getInstance().getIdTour();
 
-        mBtnAddSchedule = (FloatingActionButton) view.findViewById(R.id.btnAddSchedule);
         mRecyclerViewSchedule = (RecyclerView) view.findViewById(R.id.recyclerViewSchedule);
         mTvNoSchedule = (TextView) view.findViewById(R.id.tvNoSchedule);
         mProgressBarLoading = (ProgressBar) view.findViewById(R.id.progressBarLoading);
         mTvTitle = (TextView) view.findViewById(R.id.tvTitle);
-
-        mBtnAddSchedule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), AddScheduleActivity.class);
-                if (getActivity() instanceof DetailTourActivity) {
-                    intent.putExtra(HomeBlankFragment.ID_TOUR, mIdTour);
-                }
-                startActivity(intent);
-            }
-        });
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerViewSchedule.setLayoutManager(layoutManager);
@@ -76,9 +70,25 @@ public class ScheduleTourFragment extends Fragment implements ScheduleAdapter.On
         mRecyclerViewSchedule.setAdapter(adapter);
         getDataSchedule();
 
+        mBtnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+            }
+        });
+
         return view;
     }
 
+    public void showDialog(){
+        final Dialog dialog = new Dialog(getContext());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.dialog_menu_message);
+        final Button btnHistory = (Button) dialog.findViewById(R.id.btnHistory);
+        final Button btnMessage = (Button) dialog.findViewById(R.id.btnMessage);
+
+        dialog.show();
+    }
 
     public void getDataSchedule() {
         mTourSchedules.clear();
