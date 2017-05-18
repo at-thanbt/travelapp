@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -35,6 +34,7 @@ public class RuleActivity extends AppCompatActivity {
     private SharedPreferences mSharedPreferencesLogin;
 
     private App mApp;
+    private Firebase firebaseUser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,8 +101,12 @@ public class RuleActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public void updateLogin() {
+        firebaseUser.child("/joined").setValue("true");
+    }
+
     public void checkCode(String code, final String phone) {
-        Firebase firebaseUser = new Firebase(getString(R.string.URL_BASE) + "/code/" + code);
+        firebaseUser = new Firebase(getString(R.string.URL_BASE) + "/code/" + code);
         firebaseUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -111,6 +115,9 @@ public class RuleActivity extends AppCompatActivity {
                     if (map.get("phone").toString().equals(phone)) {
                         mApp.setIdTour(map.get("idTour").toString());
                         mApp.setName(map.get("name").toString());
+                        mApp.setIdUser(map.get("idUser").toString());
+
+                        updateLogin();
 
                         Intent intent = new Intent(RuleActivity.this, LoginTourRistActivity.class);
                         startActivity(intent);

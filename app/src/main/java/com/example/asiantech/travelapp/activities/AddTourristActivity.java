@@ -119,14 +119,15 @@ public class AddTourristActivity extends AppCompatActivity {
                         Firebase.setAndroidContext(AddTourristActivity.this);
                         myFirebaseRef = new Firebase("https://travelapp-4961a.firebaseio.com/user/" + mIdTour);
                         Map<String, String> map = new HashMap<String, String>();
-                        map.put("id", UUID.randomUUID().toString());
+                        String idUser = UUID.randomUUID().toString();
+                        map.put("id", idUser);
                         map.put("name", edtName.getText().toString());
                         map.put("pass", content1);
                         map.put("joined", "false");
                         map.put("phonenumber", edtPrice.getText().toString());
                         myFirebaseRef.push().setValue(map);
 
-                        addCode(edtPrice.getText().toString(), content1, mIdTour, edtName.getText().toString());
+                        addCode(edtPrice.getText().toString(), content1, mIdTour, edtName.getText().toString(),idUser);
 
                         User user = new User();
                         user.setPhoneNumber(edtPrice.getText().toString());
@@ -149,12 +150,13 @@ public class AddTourristActivity extends AppCompatActivity {
         return false;
     }
 
-    public void addCode(String phone, String code, String idTour, String name) {
+    public void addCode(String phone, String code, String idTour, String name,String idUser) {
         Firebase firebaseCode = new Firebase(getString(R.string.URL_BASE) + "/code");
         Map map = new HashMap();
         map.put("phone", phone);
         map.put("name", name);
         map.put("idTour", idTour);
+        map.put("idUser",idUser);
         firebaseCode.child(code).setValue(map);
     }
 

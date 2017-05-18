@@ -9,6 +9,15 @@ import android.app.Application;
 public class App extends Application{
     private String idTour;
     private String name;
+    private String idUser;
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
+    }
 
     public String getName() {
         return name;
