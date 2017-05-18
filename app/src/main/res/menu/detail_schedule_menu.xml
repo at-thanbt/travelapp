@@ -5,6 +5,10 @@
         android:title="@string/item_share_detail_schedule_menu" />
 
     <item
+        android:id="@+id/itemAddDay"
+        android:title="@string/item_add_plan_detail_schedule_menu" />
+
+    <item
         android:id="@+id/itemEditPlan"
         android:title="@string/item_edit_plan_detail_schedule_menu" />
 
