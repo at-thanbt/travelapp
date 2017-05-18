@@ -49,7 +49,6 @@ public class AddTourristActivity extends AppCompatActivity {
     private RecyclerView mRecyclerViewListTourist;
     private ListTouristAdapter mAdapter;
     private FloatingActionButton mBtnAdd;
-    //private EditText mEdtAdd;
 
     private String mIdTour;
 
@@ -59,7 +58,6 @@ public class AddTourristActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
         mRecyclerViewListTourist = (RecyclerView) findViewById(R.id.rcvListTourist);
         mBtnAdd = (FloatingActionButton) findViewById(R.id.btnAddTourist);
-        //mEdtAdd = (EditText) findViewById(R.id.edtAddTourist);
 
         mIdTour = getIntent().getStringExtra(HomeBlankFragment.ID_TOUR);
         initData();
@@ -114,7 +112,6 @@ public class AddTourristActivity extends AppCompatActivity {
                         });
                         RequestQueue rQueue = Volley.newRequestQueue(AddTourristActivity.this);
                         rQueue.add(request);
-                        //User user = new User(UUID.randomUUID().toString(), "", content1,edtPrice.getText().toString() );
                         Firebase.setAndroidContext(AddTourristActivity.this);
                         myFirebaseRef = new Firebase("https://travelapp-4961a.firebaseio.com/user/"+mIdTour);
                         Map<String, String> map = new HashMap<String, String>();

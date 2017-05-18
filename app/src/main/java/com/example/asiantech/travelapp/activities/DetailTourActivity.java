@@ -18,6 +18,7 @@ import com.example.asiantech.travelapp.R;
 import com.example.asiantech.travelapp.activities.fragments.HomeBlankFragment;
 import com.example.asiantech.travelapp.activities.fragments.NotifyFragment;
 import com.example.asiantech.travelapp.activities.fragments.ScheduleFragment;
+import com.example.asiantech.travelapp.activities.fragments.SendMessageFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,6 +79,7 @@ public class DetailTourActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ScheduleFragment(), "Kế Hoạch");
         adapter.addFragment(new NotifyFragment(), "Thông báo");
+        adapter.addFragment(new SendMessageFragment(), "Nhắn tin");
         viewPager.setAdapter(adapter);
     }
 
