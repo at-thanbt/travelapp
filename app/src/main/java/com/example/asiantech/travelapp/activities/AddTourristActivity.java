@@ -81,8 +81,6 @@ public class AddTourristActivity extends AppCompatActivity {
                 btnOk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        mTourists.add(new User(edtPrice.getText().toString()));
-                        mAdapter.notifyDataSetChanged();
 
                         String url = "https://rest.nexmo.com/sms/json?api_key=49cb9691&api_secret=19d1379d8098c4b0&";
                         url += "to=" + edtPrice.getText().toString() + "&";
@@ -105,16 +103,24 @@ public class AddTourristActivity extends AppCompatActivity {
                         });
                         RequestQueue rQueue = Volley.newRequestQueue(AddTourristActivity.this);
                         rQueue.add(request);
+
                         Firebase.setAndroidContext(AddTourristActivity.this);
                         myFirebaseRef = new Firebase("https://travelapp-4961a.firebaseio.com/user/" + mIdTour);
                         Map<String, String> map = new HashMap<String, String>();
                         map.put("id", UUID.randomUUID().toString());
                         map.put("name", "");
                         map.put("pass", content1);
-                        map.put("joined","false");
+                        map.put("joined", "false");
                         map.put("phonenumber", edtPrice.getText().toString());
-
                         myFirebaseRef.push().setValue(map);
+
+                        addCode(edtPrice.getText().toString(), content1, mIdTour);
+
+                        User user = new User();
+                        user.setPhoneNumber(edtPrice.getText().toString());
+                        mTourists.add(user);
+                        mAdapter.notifyDataSetChanged();
+
                         dialog.dismiss();
                     }
                 });
@@ -124,20 +130,29 @@ public class AddTourristActivity extends AppCompatActivity {
 
     }
 
+    public void addCode(String phone, String code, String idTour) {
+        Firebase firebaseCode = new Firebase(getString(R.string.URL_BASE) + "/code");
+        Map map = new HashMap();
+        map.put("phone", phone);
+        map.put("idTour", idTour);
+        firebaseCode.child(code).setValue(map);
+    }
+
     public void initData() {
         mTourists = new ArrayList<>();
         myFirebaseRef = new Firebase("https://travelapp-4961a.firebaseio.com/user/" + mIdTour);
-        myFirebaseRef.addValueEventListener(new ValueEventListener() {
+        Log.d("tag123", "inits");
+        myFirebaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot data : snapshot.getChildren()) {
-                    Log.d("tag123", "data " + data.toString());
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("tag123", "inits2");
+
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
                     Map map = data.getValue(Map.class);
 
                     User user = new User();
                     user.setPhoneNumber(map.get("phonenumber").toString());
                     user.setPass(map.get("pass").toString());
-
                     mTourists.add(user);
                 }
 
@@ -149,7 +164,7 @@ public class AddTourristActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                Log.e("The read failed: ", firebaseError.getMessage());
+
             }
         });
 

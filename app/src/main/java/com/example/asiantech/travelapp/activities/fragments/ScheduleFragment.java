@@ -106,6 +106,7 @@ public class ScheduleFragment extends Fragment {
                 mRecyclerViewSchedule.setLayoutManager(layoutManager);
                 mAdapter = new ScheduleAdapter(mSchedules, getContext());
                 mRecyclerViewSchedule.setAdapter(mAdapter);
+                mTvNoSchedule.setVisibility(View.GONE);
             }
 
             @Override
