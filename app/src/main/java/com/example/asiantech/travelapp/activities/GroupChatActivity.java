@@ -24,10 +24,14 @@ import java.util.List;
 
 public class GroupChatActivity extends AppCompatActivity implements ChildEventListener, View.OnClickListener {
     static final String CONVERSATION = "conversation";
+    static final String USER_ID = "user-id";
+    static final String USER_NAME = "user-name";
     private Conversation conversation;
     private Firebase messagesRef;
     private MessageAdapter messageAdapter;
     private EditText inputView;
+    private String userId;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +39,13 @@ public class GroupChatActivity extends AppCompatActivity implements ChildEventLi
         setContentView(R.layout.activity_single_chat);
         setupToolbar();
 
+        userId = getIntent().getStringExtra(USER_ID);
+        userName = getIntent().getStringExtra(USER_NAME);
+
         conversation = (Conversation) getIntent().getSerializableExtra(CONVERSATION);
 
         setTitle("Group chat");
-        ((RecyclerView)findViewById(R.id.chat_view)).setAdapter(messageAdapter = new MessageAdapter(new ArrayList<Message>(), App.getInstance().getIdTourist(), App.getInstance().getNameTourist()));
+        ((RecyclerView) findViewById(R.id.chat_view)).setAdapter(messageAdapter = new MessageAdapter(new ArrayList<Message>(), userId));
 
         Firebase.setAndroidContext(this);
         messagesRef = new Firebase("https://travelapp-4961a.firebaseio.com/messages").child(conversation.getId());
@@ -93,7 +100,7 @@ public class GroupChatActivity extends AppCompatActivity implements ChildEventLi
 
     @Override
     public void onClick(View v) {
-        if(inputView.getText().length() < 1)
+        if (inputView.getText().length() < 1)
             return;
 
         String text = inputView.getText().toString();
@@ -104,7 +111,8 @@ public class GroupChatActivity extends AppCompatActivity implements ChildEventLi
         Message message = new Message();
         message.setId(messageId);
         message.setContent(text);
-        message.setSenderId(App.getInstance().getIdTourist());
+        message.setSenderId(userId);
+        message.setSenderName(userName);
         message.setTimestamp(new Date().getTime());
 
         //messageAdapter.messages.add(message);
@@ -121,12 +129,10 @@ public class GroupChatActivity extends AppCompatActivity implements ChildEventLi
 
         private final List<Message> messages;
         private final String userId;
-        private final String name;
 
-        MessageAdapter(List<Message> messages, String userId, String name) {
+        MessageAdapter(List<Message> messages, String userId) {
             this.messages = messages;
             this.userId = userId;
-            this.name = name;
         }
 
         @Override

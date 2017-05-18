@@ -42,8 +42,8 @@
         <activity
             android:name=".activities.ScheduleDetailActivity"
             android:screenOrientation="portrait" />
-        </activity>
         <activity android:name=".activities.SingleChatActivity"></activity>
+        <activity android:name=".activities.GroupChatActivity"></activity>
     </application>
 
 </manifest>

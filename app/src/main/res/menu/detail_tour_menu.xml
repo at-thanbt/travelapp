@@ -19,4 +19,11 @@
     <item
         android:id="@+id/itemMergeTrip"
         android:title="@string/item_detail_tour_menu_merge_trip" />
+
+    <item android:id="@+id/itemSingleChat"
+        android:title="Chat với 1 tourist"/>
+
+    <item
+        android:id="@+id/itemGroupChat"
+        android:title="Chat với nhóm"/>
 </menu>

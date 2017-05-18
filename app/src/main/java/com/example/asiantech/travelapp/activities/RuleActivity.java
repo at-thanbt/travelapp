@@ -55,12 +55,13 @@ public class RuleActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent;
                 if (mRdbTourGuide.isChecked()) {
-                    String isLogin = mSharedPreferencesLogin.getString(Constant.IS_USER_LOGIN, "false");
-                    if ("true".equals(isLogin)) {
-                        intent = new Intent(RuleActivity.this, MainTourGuideActivity.class);
-                    } else {
-                        intent = new Intent(RuleActivity.this, LoginTourGuideActivity.class);
-                    }
+//                    String isLogin = mSharedPreferencesLogin.getString(Constant.IS_USER_LOGIN, "false");
+//                    if ("true".equals(isLogin)) {
+//                        intent = new Intent(RuleActivity.this, MainTourGuideActivity.class);
+//                    } else {
+//                        intent = new Intent(RuleActivity.this, LoginTourGuideActivity.class);
+//                    }
+                    intent = new Intent(RuleActivity.this, LoginTourGuideActivity.class);
                     startActivity(intent);
                 } else {
                     //show dialog de nhap ma code

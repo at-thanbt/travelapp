@@ -9,21 +9,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 
 import com.example.asiantech.travelapp.R;
-import com.example.asiantech.travelapp.activities.fragments.HomeBlankFragment;
-import com.example.asiantech.travelapp.activities.fragments.NotifyFragment;
 import com.example.asiantech.travelapp.activities.fragments.NotifyTourFragment;
-import com.example.asiantech.travelapp.activities.fragments.ScheduleFragment;
 import com.example.asiantech.travelapp.activities.fragments.ScheduleTourFragment;
+import com.example.asiantech.travelapp.activities.objects.Conversation;
+import com.example.asiantech.travelapp.activities.objects.Tour;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -85,6 +85,8 @@ public class LoginTourRistActivity extends AppCompatActivity {
                                         public void run() {
                                             Intent intent = new Intent(LoginTourRistActivity.this, SingleChatActivity.class);
                                             intent.putExtra(SingleChatActivity.CONVERSATION, touristConversation);
+                                            intent.putExtra(SingleChatActivity.USER_ID, App.getInstance().getIdTourist());
+                                            intent.putExtra(SingleChatActivity.USER_NAME, App.getInstance().getNameTourist());
                                             startActivity(intent);
                                         }
                                     });

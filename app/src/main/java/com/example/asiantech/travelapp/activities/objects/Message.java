@@ -7,5 +7,6 @@ public class Message {
     private String id;
     private String content;
     private String senderId;
+    private String senderName;
     private long timestamp;
 }

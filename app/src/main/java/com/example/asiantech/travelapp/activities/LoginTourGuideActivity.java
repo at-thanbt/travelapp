@@ -10,11 +10,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.asiantech.travelapp.R;
+import com.example.asiantech.travelapp.activities.objects.Conversation;
 import com.example.asiantech.travelapp.activities.utils.Constant;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 
 import java.util.Map;
 
@@ -32,6 +34,7 @@ public class LoginTourGuideActivity extends BaseActivity {
     private SharedPreferences mSharedPreferencesLogin;
     private ProgressBar mProgressBarLoading;
     private App mApp;
+    private Firebase conversationRef;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
