@@ -23,7 +23,6 @@ public class ViewPagerHomeFragment extends Fragment {
     ImageView mIvViewPgHome;
     TextView mTvViewPgHome;
 
-
     public ViewPagerHomeFragment(int idPicture, String content) {
         mIdResource = idPicture;
         mContentPicture = content;
