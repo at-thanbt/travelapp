@@ -1,5 +1,6 @@
 package com.example.asiantech.travelapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -9,7 +10,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.asiantech.travelapp.R;
 import com.example.asiantech.travelapp.activities.fragments.HomeBlankFragment;
@@ -30,6 +32,9 @@ public class DetailTourActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
 
+    private ImageView mImgAddPerson;
+    private ImageView mImgBack;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +42,8 @@ public class DetailTourActivity extends AppCompatActivity {
         mIdTour = getIntent().getStringExtra(HomeBlankFragment.ID_TOUR);
 
         toolbar = (Toolbar) findViewById(R.id.toolBar);
+        mImgAddPerson = (ImageView) toolbar.findViewById(R.id.imgAdd);
+        mImgBack = (ImageView) toolbar.findViewById(R.id.imgBack);
         setSupportActionBar(toolbar);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -44,6 +51,22 @@ public class DetailTourActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        mImgAddPerson.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DetailTourActivity.this,AddTourristActivity.class);
+                intent.putExtra(HomeBlankFragment.ID_TOUR,mIdTour);
+                startActivity(intent);
+            }
+        });
+
+        mImgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     public String getIdTour(){

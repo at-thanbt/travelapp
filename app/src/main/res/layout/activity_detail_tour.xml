@@ -5,7 +5,7 @@
 
     <include
         android:id="@+id/toolBar"
-        layout="@layout/tool_bar_add_tour" />
+        layout="@layout/tool_bar_detail_tour" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
