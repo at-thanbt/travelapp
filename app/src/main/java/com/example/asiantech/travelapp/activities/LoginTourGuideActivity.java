@@ -1,6 +1,5 @@
 package com.example.asiantech.travelapp.activities;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.example.asiantech.travelapp.R;
 import com.example.asiantech.travelapp.activities.utils.Constant;
@@ -30,11 +30,15 @@ public class LoginTourGuideActivity extends BaseActivity {
     private Firebase mFirebase;
     private boolean check = true;
     private SharedPreferences mSharedPreferencesLogin;
+    private ProgressBar mProgressBarLoading;
+    private App mApp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_tourguide);
+        mProgressBarLoading = (ProgressBar) findViewById(R.id.progressBarLoading);
+        mApp = (App) getApplication();
 
         Firebase.setAndroidContext(this);
         mFirebase = new Firebase("https://travelapp-4961a.firebaseio.com/user");
@@ -47,18 +51,14 @@ public class LoginTourGuideActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if (mEdtUsername.getText().toString().equals("")) {
-                    mEdtUsername.setError("Can't be blank");
+                    mEdtUsername.setError("Vui lòng nhập tên");
                 } else if (mEdtPass.getText().toString().equals("")) {
-                    mEdtPass.setError("Can't be blank");
+                    mEdtPass.setError("Vui lòng nhập mật khẩu");
                 } else {
-                    final ProgressDialog pd = new ProgressDialog(LoginTourGuideActivity.this);
-                    pd.setMessage("Loading...");
-                    pd.show();
                     check = true;
                     mFirebase.addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                            pd.dismiss();
                             Map map = dataSnapshot.getValue(Map.class);
                             user = map.get("name").toString();
                             pass = map.get("pass").toString();
@@ -66,9 +66,12 @@ public class LoginTourGuideActivity extends BaseActivity {
                             if (user.equals(mEdtUsername.getText().toString()) && pass.equals(mEdtPass.getText().toString())) {
                                 mSharedPreferencesLogin = getSharedPreferences(Constant.DATA_USER_LOGIN, MODE_PRIVATE);
                                 SharedPreferences.Editor mEditor = mSharedPreferencesLogin.edit();
-                                mEditor.putString(Constant.NAME_USER_LOGIN, mEdtUsername.getText().toString());
                                 mEditor.putString(Constant.IS_USER_LOGIN, "true");
                                 mEditor.apply();
+
+                                mApp.setNameTourguide(user);
+                                mApp.setIdTourguide(map.get("id").toString());
+
                                 intent = new Intent(LoginTourGuideActivity.this, MainTourGuideActivity.class);
                                 startActivity(intent);
                             } else {
@@ -96,7 +99,7 @@ public class LoginTourGuideActivity extends BaseActivity {
 
                         }
                     });
-
+                    mProgressBarLoading.setVisibility(View.GONE);
                 }
 
             }

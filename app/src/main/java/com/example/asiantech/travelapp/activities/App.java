@@ -6,25 +6,48 @@ import android.app.Application;
  * Created by phuong on 18/05/2017.
  */
 
-public class App extends Application{
+public class App extends Application {
+    private static App ourInstance = new App();
     private String idTour;
-    private String name;
-    private String idUser;
+    private String nameTourist;
+    private String idTourist;
+    private String nameTourguide;
+    private String idTourguide;
 
-    public String getIdUser() {
-        return idUser;
+    public static App getInstance() {
+        return ourInstance;
     }
 
-    public void setIdUser(String idUser) {
-        this.idUser = idUser;
+    public String getNameTourguide() {
+        return nameTourguide;
     }
 
-    public String getName() {
-        return name;
+    public void setNameTourguide(String nameTourguide) {
+        this.nameTourguide = nameTourguide;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getIdTourguide() {
+        return idTourguide;
+    }
+
+    public void setIdTourguide(String idTourguide) {
+        this.idTourguide = idTourguide;
+    }
+
+    public String getIdTourist() {
+        return idTourist;
+    }
+
+    public void setIdTourist(String idUser) {
+        this.idTourist = idUser;
+    }
+
+    public String getNameTourist() {
+        return nameTourist;
+    }
+
+    public void setNameTourist(String name) {
+        this.nameTourist = name;
     }
 
     public String getIdTour() {

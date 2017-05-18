@@ -114,8 +114,8 @@ public class RuleActivity extends AppCompatActivity {
                     Map map = dataSnapshot.getValue(Map.class);
                     if (map.get("phone").toString().equals(phone)) {
                         mApp.setIdTour(map.get("idTour").toString());
-                        mApp.setName(map.get("name").toString());
-                        mApp.setIdUser(map.get("idUser").toString());
+                        mApp.setNameTourist(map.get("name").toString());
+                        mApp.setIdTourist(map.get("idUser").toString());
 
                         updateLogin();
 
