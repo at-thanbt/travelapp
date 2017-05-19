@@ -106,7 +106,9 @@ public class HomeBlankFragment extends Fragment implements TourAdapter.onItemCli
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     HashMap<String, Object> map = (HashMap<String, Object>) data.getValue();
-                    if (map.get("usernameTourGuide").toString().equals(idUserLogin)) {
+                    Object usernameTourGuideObject = map.get("usernameTourGuide");
+                    String usernameTourGuide = usernameTourGuideObject != null ? usernameTourGuideObject.toString() : "";
+                    if (idUserLogin.equals(usernameTourGuide)) {
                         Tour tour = new Tour();
                         tour.setUsernameTourGuide(map.get("usernameTourGuide").toString());
                         tour.setDescriptionn(map.get("descriptionn").toString());

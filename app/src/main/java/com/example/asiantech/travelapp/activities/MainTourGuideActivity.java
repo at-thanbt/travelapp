@@ -1,5 +1,6 @@
 package com.example.asiantech.travelapp.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -25,7 +26,7 @@ import com.example.asiantech.travelapp.activities.utils.ScreenUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainTourGuideActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainTourGuideActivity extends AppCompatActivity implements View.OnClickListener, SettingMenuAdapter.OnMenuItemClickListener {
     public ActionBarDrawerToggle mDrawerToggle;
     protected View mRlContainer;
     protected RecyclerView mRecyclerViewMenu;
@@ -89,7 +90,7 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerViewMenu.setLayoutManager(layoutManager);
         initsData();
-        mAdapter = new SettingMenuAdapter(mItems, this);
+        mAdapter = new SettingMenuAdapter(mItems, this, this);
         mRecyclerViewMenu.setAdapter(mAdapter);
 
         mDrawerLayout.setScrimColor(getResources().getColor(R.color.drawerlayout_scrim));
@@ -130,11 +131,11 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
     public void initsData() {
         mItems = new ArrayList<>();
         mItems.add("header");
-        mItems.add(new MenuItem(R.drawable.ic_home, "Travel App"));
-        mItems.add(new MenuItem(R.drawable.ic_user_infor, "Thông tin cá nhân"));
-        mItems.add(new MenuItem(R.drawable.ic_create, "Chat"));
-        mItems.add(new MenuItem(R.drawable.ic_settings, "Cài đặt"));
-        mItems.add(new MenuItem(R.drawable.ic_logout, "Đăng xuất"));
+        mItems.add(new MenuItem(R.drawable.ic_home, "Travel App", 0));
+        mItems.add(new MenuItem(R.drawable.ic_user_infor, "Thông tin cá nhân", 1));
+        mItems.add(new MenuItem(R.drawable.ic_create, "Chat", 2));
+        mItems.add(new MenuItem(R.drawable.ic_settings, "Cài đặt", 3));
+        mItems.add(new MenuItem(R.drawable.ic_logout, "Đăng xuất", 4));
         mItems.add(1);
     }
 
@@ -163,6 +164,19 @@ public class MainTourGuideActivity extends AppCompatActivity implements View.OnC
                 getSupportFragmentManager().beginTransaction().replace(R.id.frMainContainer, new ChatFragment()).commit();
                 break;
 
+        }
+    }
+
+    @Override
+    public void onMenuItemClick(MenuItem item) {
+        if (item.getId() == 4) {// logout
+            App.getInstance().setIdTour(null);
+            App.getInstance().setIdTourguide(null);
+            App.getInstance().setIdTourist(null);
+            App.getInstance().setNameTourguide(null);
+            App.getInstance().setNameTourist(null);
+            startActivity(new Intent(this, SplashActivity.class));
+            finish();
         }
     }
 }
