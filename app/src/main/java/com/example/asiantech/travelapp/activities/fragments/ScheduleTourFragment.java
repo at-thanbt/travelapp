@@ -22,6 +22,7 @@ import com.example.asiantech.travelapp.activities.App;
 import com.example.asiantech.travelapp.activities.ConversationActivity;
 import com.example.asiantech.travelapp.activities.ScheduleDetailActivity;
 import com.example.asiantech.travelapp.activities.SingleChatActivity;
+import com.example.asiantech.travelapp.activities.SplashActivity;
 import com.example.asiantech.travelapp.activities.adapters.ScheduleAdapter;
 import com.example.asiantech.travelapp.activities.objects.Conversation;
 import com.example.asiantech.travelapp.activities.objects.Tour;
@@ -85,6 +86,20 @@ public class ScheduleTourFragment extends Fragment implements ScheduleAdapter.On
         dialog.setContentView(R.layout.dialog_menu_message);
         final Button btnHistory = (Button) dialog.findViewById(R.id.btnHistory);
         final Button btnMessage = (Button) dialog.findViewById(R.id.btnMessage);
+
+        dialog.findViewById(R.id.btnLogout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                App.getInstance().setIdTour(null);
+                App.getInstance().setIdTourguide(null);
+                App.getInstance().setIdTourist(null);
+                App.getInstance().setNameTourguide(null);
+                App.getInstance().setNameTourist(null);
+                startActivity(new Intent(getActivity(), SplashActivity.class));
+                getActivity().finish();
+            }
+        });
 
         btnHistory.setOnClickListener(new View.OnClickListener() {
             @Override

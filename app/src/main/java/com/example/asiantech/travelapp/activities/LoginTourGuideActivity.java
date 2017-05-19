@@ -59,42 +59,41 @@ public class LoginTourGuideActivity extends BaseActivity {
                     mEdtPass.setError("Vui lòng nhập mật khẩu");
                 } else {
                     check = true;
-                    mFirebase.addChildEventListener(new ChildEventListener() {
+                    mFirebase.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                            Map map = dataSnapshot.getValue(Map.class);
-                            user = map.get("name").toString();
-                            pass = map.get("pass").toString();
-                            Intent intent;
-                            if (user.equals(mEdtUsername.getText().toString()) && pass.equals(mEdtPass.getText().toString())) {
-                                mSharedPreferencesLogin = getSharedPreferences(Constant.DATA_USER_LOGIN, MODE_PRIVATE);
-                                SharedPreferences.Editor mEditor = mSharedPreferencesLogin.edit();
-                                mEditor.putString(Constant.IS_USER_LOGIN, "true");
-                                mEditor.apply();
-
-                                mApp.setNameTourguide(user);
-                                mApp.setIdTourguide(map.get("id").toString());
-
-                                intent = new Intent(LoginTourGuideActivity.this, MainTourGuideActivity.class);
-                                startActivity(intent);
-                            } else {
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (!dataSnapshot.hasChildren()) {
                                 showMessageDialog(getString(R.string.username_or_password_invalid));
+                                return;
                             }
-                        }
+                            boolean ok = false;
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                Map map = snapshot.getValue(Map.class);
+                                if (!(map.containsKey("name") && map.containsKey("pass")))
+                                    continue;
+                                user = map.get("name").toString();
+                                pass = map.get("pass").toString();
+                                Intent intent;
+                                if (user.equals(mEdtUsername.getText().toString()) && pass.equals(mEdtPass.getText().toString())) {
+                                    mSharedPreferencesLogin = getSharedPreferences(Constant.DATA_USER_LOGIN, MODE_PRIVATE);
+                                    SharedPreferences.Editor mEditor = mSharedPreferencesLogin.edit();
+                                    mEditor.putString(Constant.IS_USER_LOGIN, "true");
+                                    mEditor.putString(Constant.NAME_USER_LOGIN, user);
+                                    mEditor.apply();
 
-                        @Override
-                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                                    mApp.setNameTourguide(user);
+                                    mApp.setIdTourguide(map.get("id").toString());
 
-                        }
+                                    intent = new Intent(LoginTourGuideActivity.this, MainTourGuideActivity.class);
+                                    startActivity(intent);
+                                    ok = true;
+                                    finish();
+                                    break;
+                                }
+                            }
 
-                        @Override
-                        public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                        }
-
-                        @Override
-                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                            if (!ok)
+                                showMessageDialog(getString(R.string.username_or_password_invalid));
                         }
 
                         @Override

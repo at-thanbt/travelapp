@@ -24,11 +24,13 @@ public class SettingMenuAdapter extends RecyclerView.Adapter {
     protected final Context mContext;
     private final List mItems;
     private SharedPreferences mSharedPreferencesLogin;
+    private OnMenuItemClickListener onMenuItemClickListener;
 
-    public SettingMenuAdapter(List mItems, Context mContext) {
+    public SettingMenuAdapter(List mItems, Context mContext, OnMenuItemClickListener onMenuItemClickListener) {
         this.mContext = mContext;
         this.mItems = mItems;
         mSharedPreferencesLogin = mContext.getSharedPreferences(Constant.DATA_USER_LOGIN, 0);
+        this.onMenuItemClickListener = onMenuItemClickListener;
     }
 
     @Override
@@ -63,14 +65,16 @@ public class SettingMenuAdapter extends RecyclerView.Adapter {
                 break;
             case MENU_ITEM_INFORMATION:
                 MenuItem menuItem = (MenuItem) mItems.get(position);
-                ItemHolder mItem = (ItemHolder) holder;
+                final ItemHolder mItem = (ItemHolder) holder;
+                mItem.item = menuItem;
                 mItem.mTvMenuItemName.setText(menuItem.getTitle());
                 mItem.mImgIcon.setImageResource(menuItem.getIcon());
 
                 mItem.mRlItem.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        if (onMenuItemClickListener != null)
+                            onMenuItemClickListener.onMenuItemClick(mItem.item);
                     }
                 });
                 break;
@@ -125,11 +129,17 @@ public class SettingMenuAdapter extends RecyclerView.Adapter {
         ImageView mImgIcon;
         RelativeLayout mRlItem;
 
+        MenuItem item;
+
         public ItemHolder(View itemView) {
             super(itemView);
             mTvMenuItemName = (TextView) itemView.findViewById(R.id.tvMenuItemName);
             mImgIcon = (ImageView) itemView.findViewById(R.id.imgIcon);
             mRlItem = (RelativeLayout) itemView.findViewById(R.id.rlMenuItem);
         }
+    }
+
+    public interface OnMenuItemClickListener {
+        void onMenuItemClick(MenuItem item);
     }
 }
