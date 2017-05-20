@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SingleChatActivity extends AppCompatActivity implements ChildEventListener, View.OnClickListener {
+public class SingleChatActivity extends ChatActivityBase implements ChildEventListener, View.OnClickListener {
     public static final String CONVERSATION = "conversation";
     public static final String USER_ID = "user-id";
     public static final String USER_NAME = "user-name";
@@ -114,6 +114,7 @@ public class SingleChatActivity extends AppCompatActivity implements ChildEventL
         message.setId(messageId);
         message.setContent(text);
         message.setSenderId(userId);
+        message.setSenderName(userName);
         message.setTimestamp(new Date().getTime());
 
         //messageAdapter.messages.add(message);

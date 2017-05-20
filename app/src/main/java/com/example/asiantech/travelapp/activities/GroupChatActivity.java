@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class GroupChatActivity extends AppCompatActivity implements ChildEventListener, View.OnClickListener {
+public class GroupChatActivity extends ChatActivityBase implements ChildEventListener, View.OnClickListener {
     static final String CONVERSATION = "conversation";
     static final String USER_ID = "user-id";
     static final String USER_NAME = "user-name";

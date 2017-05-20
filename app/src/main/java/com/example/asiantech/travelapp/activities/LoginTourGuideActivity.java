@@ -10,20 +10,19 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.asiantech.travelapp.R;
-import com.example.asiantech.travelapp.activities.objects.Conversation;
+import com.example.asiantech.travelapp.activities.dialog.CustomMessageDialog;
 import com.example.asiantech.travelapp.activities.utils.Constant;
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 
 import java.util.Map;
 
 /**
  * Created by asiantech on 11/03/2017.
  */
-public class LoginTourGuideActivity extends BaseActivity {
+public class LoginTourGuideActivity extends LoginActivity {
 
     String user, pass;
     private EditText mEdtUsername;
@@ -35,6 +34,13 @@ public class LoginTourGuideActivity extends BaseActivity {
     private ProgressBar mProgressBarLoading;
     private App mApp;
     private Firebase conversationRef;
+
+    private CustomMessageDialog mMessageDialog = new CustomMessageDialog();
+
+    public void showMessageDialog(String message) {
+        mMessageDialog.setMessage(message);
+        mMessageDialog.show(getFragmentManager(), CustomMessageDialog.class.getSimpleName());
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,6 +69,9 @@ public class LoginTourGuideActivity extends BaseActivity {
                         @Override
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                             Map map = dataSnapshot.getValue(Map.class);
+                            if (!(map.containsKey("name") && map.containsKey("pass")))
+                                return;
+
                             user = map.get("name").toString();
                             pass = map.get("pass").toString();
                             Intent intent;
@@ -70,6 +79,7 @@ public class LoginTourGuideActivity extends BaseActivity {
                                 mSharedPreferencesLogin = getSharedPreferences(Constant.DATA_USER_LOGIN, MODE_PRIVATE);
                                 SharedPreferences.Editor mEditor = mSharedPreferencesLogin.edit();
                                 mEditor.putString(Constant.IS_USER_LOGIN, "true");
+                                mEditor.putString(Constant.NAME_USER_LOGIN, map.get("id").toString());
                                 mEditor.apply();
 
                                 mApp.setNameTourguide(user);
@@ -77,6 +87,8 @@ public class LoginTourGuideActivity extends BaseActivity {
 
                                 intent = new Intent(LoginTourGuideActivity.this, MainTourGuideActivity.class);
                                 startActivity(intent);
+
+                                startWatcher(map.get("id").toString(), user);
                             } else {
                                 showMessageDialog(getString(R.string.username_or_password_invalid));
                             }
