@@ -26,4 +26,7 @@
     <item
         android:id="@+id/itemGroupChat"
         android:title="Chat với nhóm"/>
+    <item
+        android:id="@+id/item_notification"
+        android:title="Viết thông điệp"/>
 </menu>

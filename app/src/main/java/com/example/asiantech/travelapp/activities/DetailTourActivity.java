@@ -109,8 +109,17 @@ public class DetailTourActivity extends AppCompatActivity {
             case R.id.itemGroupChat:
                 startGroupChat();
                 break;
+            case R.id.item_notification:
+                writeNotification();
+                break;
         }
         return false;
+    }
+
+    private void writeNotification() {
+        Intent intent = new Intent(this, LocationNotificationActivity.class);
+        intent.putExtra(LocationNotificationActivity.TOUR_ID, mIdTour);
+        startActivity(intent);
     }
 
     private void startGroupChat() {

@@ -27,7 +27,7 @@ abstract class LoginActivity extends AppCompatActivity {
     private ConversationHandler conversationHandler;
     private Map<String, MessageHandler> messageHandlerMap;
 
-    void startWatcher(String userId, String userName) {
+    void startMessagesWatcher(String userId, String userName) {
         if (userConversationsRef != null)
             userConversationsRef.removeEventListener(conversationHandler);
 
