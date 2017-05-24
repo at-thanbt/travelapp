@@ -1,10 +1,16 @@
 package com.example.asiantech.travelapp.activities.objects;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by phuong on 09/04/2017.
  */
 
 public class User {
+    @Getter
+    @Setter
+    private String key;
     private String chatWith;
     private String id;
     private String name;

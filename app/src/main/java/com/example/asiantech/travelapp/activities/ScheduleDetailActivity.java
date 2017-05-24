@@ -49,8 +49,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Copyright © 2017 AsianTech inc.
- * Created by HungTQB on 17/05/2017.
+ * Created by phuong on 17/05/2017.
  */
 public class ScheduleDetailActivity extends BaseActivity implements ScheduleDetailAdapter.OnScheduleDetailListener, OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, LocationListener, GoogleApiClient.OnConnectionFailedListener, DirectionCallback {
     public static final String TITLE_KEY = "mTitle";

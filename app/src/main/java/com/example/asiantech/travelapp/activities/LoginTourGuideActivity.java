@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.example.asiantech.travelapp.R;
+import com.example.asiantech.travelapp.activities.dialog.CustomMessageDialog;
 import com.example.asiantech.travelapp.activities.objects.Conversation;
 import com.example.asiantech.travelapp.activities.utils.Constant;
 import com.firebase.client.ChildEventListener;
@@ -21,9 +22,9 @@ import com.firebase.client.ValueEventListener;
 import java.util.Map;
 
 /**
- * Created by asiantech on 11/03/2017.
+ * Created by phuong on 11/03/2017.
  */
-public class LoginTourGuideActivity extends BaseActivity {
+public class LoginTourGuideActivity extends LoginActivity {
 
     String user, pass;
     private EditText mEdtUsername;
@@ -35,6 +36,13 @@ public class LoginTourGuideActivity extends BaseActivity {
     private ProgressBar mProgressBarLoading;
     private App mApp;
     private Firebase conversationRef;
+
+    private CustomMessageDialog mMessageDialog = new CustomMessageDialog();
+
+    public void showMessageDialog(String message) {
+        mMessageDialog.setMessage(message);
+        mMessageDialog.show(getFragmentManager(), CustomMessageDialog.class.getSimpleName());
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,6 +94,8 @@ public class LoginTourGuideActivity extends BaseActivity {
 
                                     intent = new Intent(LoginTourGuideActivity.this, MainTourGuideActivity.class);
                                     startActivity(intent);
+
+                                    startWatcher(map.get("id").toString(), user);
                                     ok = true;
                                     finish();
                                     break;

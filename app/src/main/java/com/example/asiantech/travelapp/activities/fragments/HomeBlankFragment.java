@@ -109,17 +109,17 @@ public class HomeBlankFragment extends Fragment implements TourAdapter.onItemCli
                     Object usernameTourGuideObject = map.get("usernameTourGuide");
                     String usernameTourGuide = usernameTourGuideObject != null ? usernameTourGuideObject.toString() : "";
                     if (idUserLogin.equals(usernameTourGuide)) {
-                    if (map.get("idTourGuide").toString().equals(idUserLogin)) {
-                        Tour tour = new Tour();
-                        tour.setUsernameTourGuide(map.get("usernameTourGuide").toString());
-                        tour.setDescriptionn(map.get("descriptionn").toString());
-                        tour.setDestination(map.get("destination").toString());
-                        tour.setIdTour(map.get("idTour").toString());
-                        tour.setTourName(map.get("tourName").toString());
-                        tour.setStartDate(map.get("startDate").toString());
-                        tour.setEndDate(map.get("endDate").toString());
-                        mTours.add(tour);
+                            Tour tour = new Tour();
+                            tour.setUsernameTourGuide(map.get("usernameTourGuide").toString());
+                            tour.setDescriptionn(map.get("descriptionn").toString());
+                            tour.setDestination(map.get("destination").toString());
+                            tour.setIdTour(map.get("idTour").toString());
+                            tour.setTourName(map.get("tourName").toString());
+                            tour.setStartDate(map.get("startDate").toString());
+                            tour.setEndDate(map.get("endDate").toString());
+                            mTours.add(tour);
                     }
+
                 }
                 if (mTours.size() == 0) {
                     mRlIntro.setVisibility(View.VISIBLE);

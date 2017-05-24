@@ -70,8 +70,8 @@ public class ListTouristAdapter extends RecyclerView.Adapter<ListTouristAdapter.
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         myFirebaseRef = new Firebase("https://travelapp-4961a.firebaseio.com/user");
-                        Log.d("tag1234", "abc " + mTvTouristes.get(position).getId());
-                        myFirebaseRef.child(mTvTouristes.get(position).getId()).removeValue();
+                        Log.d("tag1234", "abc " + mTvTouristes.get(position).getKey());
+                        myFirebaseRef.child(mTvTouristes.get(position).getKey()).removeValue();
                         mTvTouristes.remove(position);
                         notifyDataSetChanged();
 
