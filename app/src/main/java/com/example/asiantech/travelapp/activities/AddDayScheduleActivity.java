@@ -34,8 +34,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * Copyright © 2017 Gloomy
- * Created by HungTQB on 16/05/2017.
+ * Created by phuong on 16/05/2017.
  */
 public class AddDayScheduleActivity extends BaseActivity {
     public static final String ID_TOUR_SCHEDULE = "idTourSchedule";

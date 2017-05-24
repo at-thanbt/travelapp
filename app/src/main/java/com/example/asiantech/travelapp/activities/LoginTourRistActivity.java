@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by asiantech on 11/03/2017.
+ * Created by phuong on 11/03/2017.
  */
 public class LoginTourRistActivity extends LoginActivity implements ChildEventListener {
     private TabLayout tabLayout;

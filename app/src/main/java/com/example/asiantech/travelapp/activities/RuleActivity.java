@@ -119,6 +119,8 @@ public class RuleActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null) {
                     final Map map = dataSnapshot.getValue(Map.class);
+                    if (!map.containsKey("phone"))
+                        return;
                     if (map.get("phone").toString().equals(phone)) {
                         Log.d("tag123"," cb "+map.get("idTour").toString());
                         App.getInstance().setIdTour(map.get("idTour").toString());
