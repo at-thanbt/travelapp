@@ -23,7 +23,7 @@ import java.util.Calendar;
 import java.util.UUID;
 
 /**
- * Created by asiantech on 30/04/2017.
+ * Created by phuong on 30/04/2017.
  */
 public class AddTourActivity extends AppCompatActivity {
     private SharedPreferences mSharedPreferencesUserLogin;

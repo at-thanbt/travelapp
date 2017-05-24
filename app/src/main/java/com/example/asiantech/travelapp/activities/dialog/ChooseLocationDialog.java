@@ -33,7 +33,7 @@ import lombok.experimental.Accessors;
  * Copyright © 2017 Gloomy
  * Created by HungTQB on 18-May-17.
  */
-public class ChooseLocationDialog extends DialogFragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class  ChooseLocationDialog extends DialogFragment implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     @Setter
     @Accessors(prefix = "m")

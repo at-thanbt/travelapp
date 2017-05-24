@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by asiantech on 11/03/2017.
+ * Created by phuong on 11/03/2017.
  */
 public class LoginTourRistActivity extends LoginActivity {
     private TabLayout tabLayout;

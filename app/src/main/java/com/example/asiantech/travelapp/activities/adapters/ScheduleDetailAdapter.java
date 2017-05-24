@@ -21,8 +21,7 @@ import static com.example.asiantech.travelapp.activities.adapters.ScheduleDetail
 import static com.example.asiantech.travelapp.activities.adapters.ScheduleDetailAdapter.ScheduleDetailItemType.TIME_DETAIL;
 
 /**
- * Copyright © 2017 AsianTech inc.
- * Created by HungTQB on 18/05/2017.
+ * Created by phuong on 18/05/2017.
  */
 public class ScheduleDetailAdapter extends BaseAdapter {
     private static final int TITLE_DAY_TIME_OFFSET = 0;

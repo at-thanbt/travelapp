@@ -170,6 +170,8 @@ public class AddTourristActivity extends AppCompatActivity {
                     Map map = data.getValue(Map.class);
 
                     User user = new User();
+                    user.setId(map.get("id").toString());
+                    user.setKey(mIdTour);
                     user.setPhoneNumber(map.get("phonenumber").toString());
                     user.setPass(map.get("pass").toString());
                     mTourists.add(user);
